@@ -1,0 +1,20 @@
+.parameters-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.parameters-container_row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.parameter-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 50%;
+    min-height: 200px;
+    padding: 50px;
+    text-align: center;
+}

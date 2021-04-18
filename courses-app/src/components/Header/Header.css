@@ -1,0 +1,25 @@
+.header {
+    border-bottom: 1px solid #eaeaea;
+}
+
+.navbar {
+    display: flex;
+    max-width: 1200px;
+    padding: 20px 40px;
+    margin: auto;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.navbar-title, .navbar-user {
+    margin: 0 20px;
+}
