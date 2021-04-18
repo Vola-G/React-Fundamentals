@@ -8,15 +8,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Input({ label }) {
+export default function Input({ label, value, onChange }) {
   const classes = useStyles();
+  function handleChange(event) {
+    onChange(event.target.value);
+  }
     return (
         <TextField
           label={label}
           id="outlined-size-small"
           variant="outlined"
           size="small"
+          value={value}
           className={classes.marginRight}
+          onChange={handleChange}
         />
     )
 }

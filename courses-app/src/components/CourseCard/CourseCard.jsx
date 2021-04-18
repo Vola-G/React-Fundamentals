@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
-import { formatTime } from '../../utils';
 import { mockedAuthorsList } from "../../localService/Mock";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +48,7 @@ export default function CourseCard(props) {
                 <b>Autor:</b> {autors.join(", ")}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
-                <b>Duration:</b> {formatTime(props.duration)}
+                <b>Duration:</b> {props.duration}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Created:</b> {props.creationDate}
