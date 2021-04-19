@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
-import { mockedAuthorsList } from "../../localService/Mock";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,15 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
   }));
   
-
 export default function CourseCard(props) {
     const classes = useStyles();
-    const autors = [];
-    mockedAuthorsList.forEach(author => {
-      if (props.authors.includes(author.id)) {
-        autors.push(author.name);
-      }
-    });
     return (
         <Card className={classes.root}>
           <CardContent className={classes.title}>
@@ -45,7 +37,7 @@ export default function CourseCard(props) {
             </CardContent>
             <CardContent className={classes.info}>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
-                <b>Autor:</b> {autors.join(", ")}
+                <b>Autor:</b> {props.authors.join(", ")}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Duration:</b> {props.duration}

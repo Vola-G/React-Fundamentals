@@ -1,9 +1,8 @@
-import { mockedCourseList } from "../../localService/Mock";
 import CourseCard from '../CourseCard/CourseCard'
 
-export default function Cards() {
+export default function Cards({ courses }) {
     return (
-        mockedCourseList.map(course => {
+        courses.map(course => {
             return <CourseCard key={course.id} {...course}/>
         })
     )
