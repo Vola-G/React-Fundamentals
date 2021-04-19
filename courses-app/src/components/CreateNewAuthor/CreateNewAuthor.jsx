@@ -1,11 +1,11 @@
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { ParametersTitle } from "../ParametersTitle/ParametersTitle";
-import "./AddAuthor.css";
+import "./CreateNewAuthor.css";
 import { useState } from 'react';
 import { authorFactory } from '../../utils';
 
-export function AddAuthor(props) {
+export function CreateNewAuthor(props) {
     const [value, setValue] = useState("");
 
     function handleChange(newAuthor) {
@@ -13,7 +13,7 @@ export function AddAuthor(props) {
     }
 
     function handleClick() {
-        props.authors.push(authorFactory(value));
+        props.onCreateAuthor(authorFactory(value));
         setValue("");
     }
 

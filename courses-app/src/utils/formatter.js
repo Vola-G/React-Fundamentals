@@ -14,3 +14,8 @@ export function formatTime(time) {
     minutes = minutes < 10 ? '0' + minutes : minutes;
     return `${hours}:${minutes}`;
 }
+
+export function formatDate() {
+    let currentDate = new Date();
+    return currentDate.toLocaleDateString('en-GB');
+}
