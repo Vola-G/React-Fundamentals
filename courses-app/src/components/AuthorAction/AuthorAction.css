@@ -1,7 +1,5 @@
-/* .deleteAuthors-container_center {
+.author-action_block {
     display: flex;
-    flex-direction: column;
-    padding: 50px;
-    width: 50%;
-    text-align: center;
-} */
+    justify-content: space-between;
+    margin: 5px;
+}

@@ -1,5 +1,6 @@
 import Button from "../Button/Button";
 import Typography from '@material-ui/core/Typography';
+import "./AuthorAction.css"
 
 export function AuthorAction({ author, handleAuthor, action }) {
 
@@ -8,11 +9,11 @@ export function AuthorAction({ author, handleAuthor, action }) {
     }
 
     return(
-        <>
+        <div className={"author-action_block"}>
             <Typography gutterBottom variant="h6" component="p">
-                {author}
+                {author.name}
             </Typography>
             <Button name={action} onClick={()=>handleClick()}/>
-        </>
+        </div>
     );
 }

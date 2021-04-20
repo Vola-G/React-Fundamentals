@@ -3,26 +3,30 @@ import { CreateNewAuthor } from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
 import { mockedAddAuthor } from "../../localService/Mock";
 import { ManageAuthor } from "../ManageAuthor/ManageAuthor";
+import { getAuthorsId } from "../../utils";
 import "./ParametersForm.css";
 
 
-export function ParametersForm() {
-    let [allAuthors, setNewAuthor]  = useState(mockedAddAuthor);
-    let [authorsList, setAuthors] = useState([]);
+export function ParametersForm(props) {
+    let [authorsList, setAuthors] = useState(mockedAddAuthor);
     let [courseAuthors, setCourseAuthors] = useState([]);
+    let [duration, setDuration] = useState("");
+    let [courseParams, setCourseParams] = useState({});
 
-    useEffect(()=> {
-        const authors = allAuthors.map(item => item.name);
-        setAuthors(authors);
-    }, [allAuthors])
+
+    useEffect(()=>{
+        props.onParametersChange(courseParams)
+    }, [courseParams])
+
 
     function handleCreateAuthor(newAuthor) {
-        setNewAuthor([...allAuthors, newAuthor]);
+        setAuthors([...authorsList, newAuthor]);
     }
 
     function handleAddAuthor(name) {
-        setAuthors(authorsList.filter(person => person !== name))
-        setCourseAuthors([...courseAuthors, name])
+        setAuthors(authorsList.filter(person => person !== name));
+        setCourseAuthors([...courseAuthors, name]);
+        setCourseParams({"duration": duration, ...getAuthorsId(courseAuthors)})
     }
 
     function handleDeleteAuthor(name) {
@@ -30,26 +34,27 @@ export function ParametersForm() {
         setAuthors([...authorsList, name]);
     }
 
+    function handleChangeDuration(time) {
+        setDuration(time)
+    }
+
     return(
         <div className={"parameters-container"}>
             <div className={"parameters-container_row"}>
-                <CreateNewAuthor 
-                    authors={allAuthors} 
-                    onCreateAuthor={(newAuthor) => handleCreateAuthor(newAuthor)}
-                    />
+                <CreateNewAuthor onCreateAuthor={(newAuthor) => handleCreateAuthor(newAuthor)} />
                 <ManageAuthor 
                     title="Authors" 
                     authors={authorsList} 
-                    handleAuthor={()=>handleAddAuthor()}
+                    handleAuthor={(author)=>handleAddAuthor(author)}
                     actionName="Add author"
                     />
             </div>
             <div className={"parameters-container_row"}>
-                <CourseDuration />
+                <CourseDuration onAddDuration={(time)=> handleChangeDuration(time)}/>
                 <ManageAuthor 
                     title="Course Authors" 
                     authors={courseAuthors} 
-                    handleAuthor={()=>handleDeleteAuthor()}
+                    handleAuthor={(author)=>handleDeleteAuthor(author)}
                     actionName="Delete author"
                     />
             </div>
