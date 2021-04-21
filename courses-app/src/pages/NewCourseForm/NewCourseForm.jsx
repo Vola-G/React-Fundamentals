@@ -21,11 +21,19 @@ export function NewCourseForm(props) {
         setParameters(newParams)
     }
 
+    function handleAddAuthor(newAuthor) {
+        props.onAddAuthor(newAuthor)
+    }
+
+
 
     return (
         <div className={"container-center"}>
             <DescriptionForm onClick={(description)=>handleClick(description)}/>
-            <ParametersForm onParametersChange={(newParams)=>handleParametersChange(newParams)}/>
+            <ParametersForm 
+                onParametersChange={(newParams)=>handleParametersChange(newParams)}
+                onAddAuthor={(newAuthor)=>handleAddAuthor(newAuthor)}
+                />
         </div>
     )
 }

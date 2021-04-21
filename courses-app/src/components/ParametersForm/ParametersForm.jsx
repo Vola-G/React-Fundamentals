@@ -8,34 +8,29 @@ import "./ParametersForm.css";
 
 
 export function ParametersForm(props) {
-    let [authorsList, setAuthors] = useState(mockedAddAuthor);
-    let [courseAuthors, setCourseAuthors] = useState([]);
+    let [authorsList, setAuthorsList] = useState(mockedAddAuthor);
+    let [authors, setAuthors] = useState([]);
     let [duration, setDuration] = useState("");
-    let [courseParams, setCourseParams] = useState({});
-
-
-    useEffect(()=>{
-        props.onParametersChange(courseParams)
-    }, [courseParams])
-
 
     function handleCreateAuthor(newAuthor) {
-        setAuthors([...authorsList, newAuthor]);
+        setAuthorsList([...authorsList, newAuthor]);
+        props.onAddAuthor(newAuthor);
     }
 
     function handleAddAuthor(name) {
-        setAuthors(authorsList.filter(person => person !== name));
-        setCourseAuthors([...courseAuthors, name]);
-        setCourseParams({"duration": duration, ...getAuthorsId(courseAuthors)})
+        setAuthorsList(authorsList.filter(person => person !== name));
+        setAuthors([...authors, name]);
+        props.onParametersChange({"duration": duration, ...getAuthorsId([...authors, name])})
     }
 
     function handleDeleteAuthor(name) {
-        setCourseAuthors(courseAuthors.filter(person => person !== name));
-        setAuthors([...authorsList, name]);
+        setAuthors(authors.filter(person => person !== name));
+        setAuthorsList([...authorsList, name]);
     }
 
     function handleChangeDuration(time) {
         setDuration(time)
+        props.onParametersChange({"duration": time, ...getAuthorsId(authors)})
     }
 
     return(
@@ -53,7 +48,7 @@ export function ParametersForm(props) {
                 <CourseDuration onAddDuration={(time)=> handleChangeDuration(time)}/>
                 <ManageAuthor 
                     title="Course Authors" 
-                    authors={courseAuthors} 
+                    authors={authors} 
                     handleAuthor={(author)=>handleDeleteAuthor(author)}
                     actionName="Delete author"
                     />

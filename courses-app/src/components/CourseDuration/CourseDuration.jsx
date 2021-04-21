@@ -5,11 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import { formatTime } from '../../utils';
 import "./CourseDuration.css";
 
-export function CourseDuration() {
+export function CourseDuration(props) {
     const [value, setValue] = useState("");
 
     function handleChange(newValue) {
         setValue(newValue);
+        props.onAddDuration(formatTime(newValue))
     }
 
     return(

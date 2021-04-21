@@ -8,10 +8,10 @@ export function formatTime(time) {
 
 export function formatDate() {
     let currentDate = new Date();
-    return currentDate.toLocaleDateString('en-GB');
+    return currentDate.toLocaleDateString('ru-RU');
 }
 
-export function getAuthorsId(authors) {
-    let authorsId = authors.map(author => author.id);
-    return {id: authorsId}
+export function getAuthorsId(authorsList) {
+    let authorsId = authorsList.map(author => author.id);
+    return {"authors": authorsId}
 }

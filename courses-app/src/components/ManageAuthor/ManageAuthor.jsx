@@ -10,10 +10,6 @@ export function ManageAuthor({ title, authors, handleAuthor, actionName }) {
         handleAuthor(author)
     }
 
-    useEffect(()=>{
-        console.log(authors);
-    },[authors]);
-
     return(
         <div className={"parameter-block"}>
             <ParametersTitle title={title}/>

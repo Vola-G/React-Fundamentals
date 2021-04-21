@@ -14,7 +14,7 @@ export default function Curses(props) {
       };
 
     useEffect(() => {
-        const results = props.coursesList.filter(course => course.title.toLowerCase().includes(searchTerm) || course.id.toLowerCase().includes(searchTerm));
+        const results = props.courses.filter(course => course.title.toLowerCase().includes(searchTerm) || course.id.toLowerCase().includes(searchTerm));
         setSearchResults(results);
     }, [searchTerm]);
 
@@ -28,7 +28,7 @@ export default function Curses(props) {
                 <SearchForm value={searchTerm} onChangeTerm={(value)=> handleChange(value)}/>
                 <Button onClick={()=>handleClick()} name="Add new course"/>
             </div>
-            <Cards courses={searchResults}/>
+            <Cards courses={searchResults} authors={props.authors}/>
         </div>
     )
 }

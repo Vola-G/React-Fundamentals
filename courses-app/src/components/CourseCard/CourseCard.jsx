@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
-import { mockedAddAuthor } from "../../localService/Mock";
+import { formatTime } from '../../utils';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,33 +31,34 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 export default function CourseCard(props) {
+  const { title, description, duration, creationDate } = props.course;
     const classes = useStyles();
-    const autors = [];
-    mockedAddAuthor.forEach(author => {
-      if (props.authors.includes(author.id)) {
-        autors.push(author.name);
+    const courseAuthors = [];
+    props.authors.forEach(author => {
+      if (props.course.authors.includes(author.id)) {
+        courseAuthors.push(author.name);
       }
     });
     return (
         <Card className={classes.root}>
           <CardContent className={classes.title}>
               <Typography gutterBottom variant="h4" component="h2">
-                  {props.title}
+                  {title}
               </Typography>
               <Typography variant="body1"  component="p">
-                  {props.description}
+                  {description}
               </Typography>
             </CardContent>
             <CardContent className={classes.info}>
             <div>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
-                <b>Autor:</b> {autors.join(", ")}
+                <b>Authors:</b> {courseAuthors.join(", ")}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
-                <b>Duration:</b> {props.duration}
+                <b>Duration:</b> {formatTime(duration)}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
-                <b>Created:</b> {props.creationDate}
+                <b>Created:</b> {creationDate}
               </Typography>
               </div>
               <div>
