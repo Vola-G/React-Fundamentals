@@ -5,7 +5,7 @@ export default function Btn(props) {
         props.onClick();
     }
     return (
-        <Button variant="contained" color="secondary" style={{width: "max-content"}} onClick={()=>handleClick()}>
+        <Button variant="contained" color="primary" style={{width: "max-content"}} onClick={()=>handleClick()}>
             {props.name}
         </Button>
     )

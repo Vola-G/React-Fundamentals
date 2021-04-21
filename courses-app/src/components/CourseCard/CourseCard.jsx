@@ -17,11 +17,16 @@ const useStyles = makeStyles((theme) => ({
       width: "70%"
     },
     info: {
-      width: "30%"
+      width: "30%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-end",
+      justifyContent: "space-between"
     },
     infoElem: {
-      margin: "10px 0"
-    }
+      margin: "10px 0",
+      textAlign: "end"
+    },
 
   }));
   
@@ -36,7 +41,7 @@ export default function CourseCard(props) {
     return (
         <Card className={classes.root}>
           <CardContent className={classes.title}>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h4" component="h2">
                   {props.title}
               </Typography>
               <Typography variant="body1"  component="p">
@@ -44,6 +49,7 @@ export default function CourseCard(props) {
               </Typography>
             </CardContent>
             <CardContent className={classes.info}>
+            <div>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Autor:</b> {autors.join(", ")}
               </Typography>
@@ -53,7 +59,10 @@ export default function CourseCard(props) {
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Created:</b> {props.creationDate}
               </Typography>
-              <Button name="Show course"/>
+              </div>
+              <div>
+              <Button name="Show course" className={classes.btn}/>
+              </div>
             </CardContent>
       </Card>
     )

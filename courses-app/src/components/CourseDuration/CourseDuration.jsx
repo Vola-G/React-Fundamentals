@@ -15,10 +15,12 @@ export function CourseDuration() {
     return(
         <div className={"parameter-block"}>
             <ParametersTitle title="Duration"/>
-            <Input label="Duration" value={value} onChange={handleChange}/>
-            <Typography gutterBottom variant="h4" component="h4" style={{textAlign: "start"}}>
-                Duration: <b>{formatTime(value)}</b> hours
-            </Typography>
+            <div className={"parameter-block_form"}>
+                <Input label="Duration" value={value} onChange={handleChange}/>
+                <Typography gutterBottom variant="h4" component="h4" style={{textAlign: "start", marginTop: "50px"}}>
+                    Duration: <b>{formatTime(value)}</b> hours
+                </Typography>
+            </div>
         </div>
     )
 }

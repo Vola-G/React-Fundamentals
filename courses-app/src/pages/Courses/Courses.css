@@ -1,12 +1,5 @@
-.container-center {
-    max-width: 1200px;
-    margin: auto;
-    padding: 50px 0;
-}
-
 .searchform-container {
-    display: flex;
-    margin: 40px auto;
+    display: flex;;
     justify-content: space-between;
     width: 100%;
 }

@@ -1,6 +1,6 @@
 import "./Header.css";
 import SchoolIcon from '@material-ui/icons/School';
-import Button from "../Button/Button"
+import Button from "../Button/Button";
 
 export default function Header() {
     return (
@@ -11,7 +11,7 @@ export default function Header() {
                     <h3 className={"navbar-title"}>Courses-App</h3>
                 </div>
                 <div className={"navbar-right"}>
-                    <h5 className={"navbar-user"}>Dave</h5>
+                    <h4 className={"navbar-user"}>Dave</h4>
                     <Button name="Logout"/>
                 </div>
             </nav>

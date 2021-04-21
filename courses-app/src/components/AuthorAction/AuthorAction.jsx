@@ -10,7 +10,7 @@ export function AuthorAction({ author, handleAuthor, action }) {
 
     return(
         <div className={"author-action_block"}>
-            <Typography gutterBottom variant="h6" component="p">
+            <Typography variant="button" display="block" gutterBottom>
                 {author.name}
             </Typography>
             <Button name={action} onClick={()=>handleClick()}/>
