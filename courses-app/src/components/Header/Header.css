@@ -1,0 +1,26 @@
+.header {
+    background-color: white;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.navbar {
+    display: flex;
+    max-width: 1200px;
+    padding: 20px 0;
+    margin: auto;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.navbar-title, .navbar-user {
+    margin: 0 30px;
+}
