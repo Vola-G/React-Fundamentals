@@ -8,11 +8,16 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
     "react": "^17.0.2",
+    "react-axios": "^2.0.5",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.3.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-uuid": "^1.0.2",
-    "web-vitals": "^1.1.1"
+    "web-vitals": "^1.1.1",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,8 +44,16 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.24.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0"
-  }
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-react": "^7.23.2"
+  },
+  "description": "last updates: 18.04 1. Switching between the list of courses and the form for creating a new course 2. Added logic for the duration of the course 3. Added logic for creating a new author for the course",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vola-G/React-Fundamentals/tree/Courses-app"
+  },
+  "author": "Volha Hrakholskaya",
+  "license": "ISC"
 }
