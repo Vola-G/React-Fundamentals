@@ -12,6 +12,7 @@ body {
 body {
     background: linear-gradient(to bottom, #f8f8f8, #fff);
 }
+
 .container-center {
     display: flex;
     flex-direction: column;
