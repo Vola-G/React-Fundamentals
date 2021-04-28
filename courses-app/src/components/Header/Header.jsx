@@ -1,18 +1,36 @@
-import "./Header.css";
-import SchoolIcon from '@material-ui/icons/School';
-import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
-export default function Header() {
+
+import { Login } from "pages/Login/Login";
+import { UserBar } from "components/Header/UserBar/UserBar";
+import { GuestBar } from "components/Header/GuestBar/GuestBar";
+
+import SchoolIcon from '@material-ui/icons/School';
+import "./Header.css";
+
+
+export default function Header({ isLogin, user }) {
+
+    function handleClick() {
+        return (
+            <Login />
+        );
+    }
+
     return (
         <div className={"header"}>
             <nav className={"navbar"}>
                 <div className={"navbar-left"}>
-                    <SchoolIcon color="primary" style={{ fontSize: 30 }}/>
-                    <h3 className={"navbar-title"}>Courses-App</h3>
+                    <Link to={"/courses"}>
+                        <SchoolIcon color="primary" style={{ fontSize: 30 }}/>
+                    </Link>
+                    <Link to={"/courses"} className={"navbar-title_link"}>
+                        <h3 className={"navbar-title"}>Courses-App</h3>
+                    </Link>
                 </div>
                 <div className={"navbar-right"}>
-                    <h4 className={"navbar-user"}>Dave</h4>
-                    <Button name="Logout"/>
+                { isLogin ? <UserBar user={user.loginData.email}/> : <GuestBar onClick={handleClick}/> }
+
                 </div>
             </nav>
         </div>

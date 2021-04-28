@@ -21,6 +21,15 @@
     margin-left: auto;
 }
 
-.navbar-title, .navbar-user {
+.navbar-title {
     margin: 0 30px;
+}
+
+.navbar-btn {
+    margin-left: 30px !important;
+}
+
+.navbar-title_link {
+    text-transform: none;
+    text-decoration: none;
 }
