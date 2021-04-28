@@ -1,0 +1,22 @@
+.nav-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.course-title {
+    text-align: center;
+}
+
+.course-info_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.course-info_description {
+    width: 60%;
+}
+
+.course-info_params {
+    width: 35%;
+}
