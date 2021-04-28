@@ -3,7 +3,7 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import "../SearchForm/SearchForm.css"
 
-export default function SearchForm({ serchTerm, onChangeTerm }) {
+export default function SearchForm({ searchTerm, onChangeTerm }) {
     const [value, setValue] = useState("");
 
     function handleChange(term) {
@@ -16,8 +16,8 @@ export default function SearchForm({ serchTerm, onChangeTerm }) {
 
     return (
         <form className={"form-container"}>
-            <Input lable="Search" value={serchTerm} onChange={(term)=>handleChange(term)}/>
-            <Button name="Search" onClick={handleClick}/>
+            <Input lable="Search" value={searchTerm} type="text" onChange={handleChange} style={"search-input"}/>
+            <Button name="Search" variant="contained" color="primary" onClick={handleClick}/>
         </form>
     )
 }
