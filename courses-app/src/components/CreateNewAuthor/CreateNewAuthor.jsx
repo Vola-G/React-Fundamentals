@@ -19,11 +19,11 @@ export function CreateNewAuthor(props) {
 
     return(
         <div className={"parameter-block"}>
-            <ParametersTitle title="Add author"/>
+            <ParametersTitle title="Add author" variant="h4" component="h2"/>
             <div className={"parameter-block_form"}>
-                <Input label="Author name" value={value} onChange={handleChange}/>
+                <Input label="Author name" type="text" value={value} onChange={handleChange}/>
                 <div style={{width: "auto", margin: "30px"}}>
-                    <Button name="Create Author" onClick={handleClick}/>
+                    <Button name="Create Author" variant="contained" color="primary" onClick={handleClick}/>
                 </div>
             </div>
         </div>

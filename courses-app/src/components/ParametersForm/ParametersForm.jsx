@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CreateNewAuthor } from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
 import { mockedAddAuthor } from "../../localService/Mock";

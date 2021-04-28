@@ -1,12 +1,23 @@
 import Button from '@material-ui/core/Button';
 
-export default function Btn(props) {
+export default function Btn({ name, variant, color, onClick, type, style, icon }) {
     function handleClick() {
-        props.onClick();
+        if(onClick) {
+            onClick()
+        }
     }
+
     return (
-        <Button variant="contained" color="primary" style={{width: "max-content"}} onClick={()=>handleClick()}>
-            {props.name}
+        <Button 
+            variant={variant} 
+            color={color} 
+            onClick={handleClick} 
+            type={type} 
+            startIcon={icon} 
+            style={{width: "max-content"}} 
+            className={style}
+            >
+            {name}
         </Button>
     )
 }

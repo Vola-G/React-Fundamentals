@@ -1,8 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
+
+import { makeStyles } from '@material-ui/core/styles';
 import { formatTime } from '../../utils';
 
 
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 export default function CourseCard(props) {
-  const { title, description, duration, creationDate } = props.course;
+    const { title, description, duration, creationDate, id } = props.course;
     const classes = useStyles();
     const courseAuthors = [];
     props.authors.forEach(author => {
@@ -39,17 +42,22 @@ export default function CourseCard(props) {
         courseAuthors.push(author.name);
       }
     });
+
+    function showCourse() {
+      return;
+    }
+
     return (
         <Card className={classes.root}>
           <CardContent className={classes.title}>
-              <Typography gutterBottom variant="h4" component="h2">
-                  {title}
-              </Typography>
-              <Typography variant="body1"  component="p">
-                  {description}
-              </Typography>
-            </CardContent>
-            <CardContent className={classes.info}>
+            <Typography gutterBottom variant="h4" component="h2">
+                {title}
+            </Typography>
+            <Typography variant="body1"  component="p">
+                {description}
+            </Typography>
+          </CardContent>
+          <CardContent className={classes.info}>
             <div>
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Authors:</b> {courseAuthors.join(", ")}
@@ -60,11 +68,13 @@ export default function CourseCard(props) {
               <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
                 <b>Created:</b> {creationDate}
               </Typography>
-              </div>
-              <div>
-              <Button name="Show course" className={classes.btn}/>
-              </div>
-            </CardContent>
+            </div>
+            <div>
+              <Link to={`/course-info/${id}`}>
+                <Button name="Show course" variant="contained" color="primary" onClick={showCourse} className={classes.btn}/>
+              </Link>
+            </div>
+          </CardContent>
       </Card>
     )
 }

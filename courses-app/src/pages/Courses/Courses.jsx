@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import Cards from "../../components/Cards/Cards";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import Button from "../../components/Button/Button";
 
-import { useState, useEffect } from "react";
 import "./Courses.css";
 
 export default function Curses(props) {
@@ -19,14 +21,16 @@ export default function Curses(props) {
     }, [searchTerm]);
 
     function handleClick() {
-        props.onSwichPage()
+        // props.onSwichPage()
     }
 
     return(
         <div className={"container-center"}>
             <div className={"searchform-container"}>
-                <SearchForm value={searchTerm} onChangeTerm={(value)=> handleChange(value)}/>
-                <Button onClick={()=>handleClick()} name="Add new course"/>
+                <SearchForm value={searchTerm} onChangeTerm={handleChange}/>
+                <Link to={"/create-course"}>
+                    <Button name="Add new course" variant="contained" color="primary" onClick={handleClick} />
+                </Link>
             </div>
             <Cards courses={searchResults} authors={props.authors}/>
         </div>

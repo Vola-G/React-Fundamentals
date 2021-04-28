@@ -3,7 +3,6 @@ import { DescriptionForm } from "../../components/DescriptionForm/DescriptionFor
 import { ParametersForm } from "../../components/ParametersForm/ParametersForm";
 import uuid from 'react-uuid';
 import { formatDate } from "../../utils"
-import "./NewCourseForm.css";
 
 export function NewCourseForm(props) {
     const [parsmeters, setParameters] = useState({});
@@ -14,7 +13,6 @@ export function NewCourseForm(props) {
             ...descrip,
             "creationDate": formatDate(), 
             ...parsmeters});
-        props.onSwichPage()
     }
 
     function handleParametersChange(newParams) {

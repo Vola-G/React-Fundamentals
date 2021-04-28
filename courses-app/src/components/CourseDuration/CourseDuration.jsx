@@ -15,9 +15,9 @@ export function CourseDuration(props) {
 
     return(
         <div className={"parameter-block"}>
-            <ParametersTitle title="Duration"/>
+            <ParametersTitle title="Duration" variant="h4" component="h2"/>
             <div className={"parameter-block_form"}>
-                <Input label="Duration" value={value} onChange={handleChange}/>
+                <Input label="Duration" value={value} type="number" onChange={handleChange}/>
                 <Typography gutterBottom variant="h4" component="h4" style={{textAlign: "start", marginTop: "50px"}}>
                     Duration: <b>{formatTime(value)}</b> hours
                 </Typography>
