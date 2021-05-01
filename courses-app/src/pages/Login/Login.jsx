@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { useForm } from "react-hook-form";
 import axios from 'axios';
-// import { loginSchema } from "../../utils/validation";
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
@@ -28,7 +27,6 @@ export const Login = ({ onChangeUser }) => {
         const storage = window.localStorage;
         storage.setItem("currentUser", JSON.stringify(user));
         onChangeUser(user);
-        <Redirect to="/courses"/>
       }
     }, [user])
 
@@ -45,7 +43,6 @@ export const Login = ({ onChangeUser }) => {
           const result = await axios(options);
           setUser({...{loginData}, "token": result.data.result});
           alert("you are logged in")
-          console.log("FETCH RESULT", result)
         } catch(error) {
           console.log("ERROR", error)
         }
@@ -59,10 +56,6 @@ export const Login = ({ onChangeUser }) => {
         email: email,
         password: password
       }
-      // const isValid = await loginSchema.isValid(loginData)
-      // .catch(function (err) {
-      //   return err;
-      // });
       setloginData(loginData);
     }
 
@@ -79,7 +72,7 @@ export const Login = ({ onChangeUser }) => {
                     value={email}
                     style={"form-item"} 
                     onChange={(emailValue)=>setEmail(emailValue)}
-                    helpText={"Empty field"}
+                    helperText={""}
                     />
                   <Input 
                     label="Password" 
@@ -107,32 +100,3 @@ export const Login = ({ onChangeUser }) => {
         </div>
     )  
 }
-
-
-// export function Login() {
-//   const { register, handleSubmit, watch } = useForm();
-//   const onSubmit = data => console.log(data);
-
-//   console.log(watch("example"));
-
-
-//   return (
-
-//             <div className={"login-container"}>
-//             <form className={"login-block"} onSubmit={handleSubmit(onSubmit)}>
-//                 <Typography variant="h4" color="textSecondary" component="h4" >
-//                     Login
-//                 </Typography>
-//                 <input defaultValue="test" {...register("example")} />
-//                 {/* <input {...register("exampleRequired", { required: true })} /> */}
-//                 {/* <Input lable="Email" type="email" {...register("email")} /> */}
-//                 <Input lable="Password" type="text" {...register("password", { required: true })}/>
-//                 <Button name="Login" variant="contained" color="primary" type="submit"/>
-//                 <Typography variant="body2" color="textSecondary" component="h5" >
-//                     If you not have an account you can <Link to={"/registration"}>Registration</Link>
-//                 </Typography>
-//             </form>
-//         </div>
-
-//   );
-// }

@@ -1,7 +1,12 @@
-import * as yup from "yup";
+export function useNameValidation (name) {
+  return name.length > 0 ? true : false;
+}
 
-export const loginSchema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().min(4).max(9).required(),
-  });
+export function useEmailValidation (email) {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
+export function usePassValidation (pass) {
+  return pass.length > 6 ? true : false;
+}

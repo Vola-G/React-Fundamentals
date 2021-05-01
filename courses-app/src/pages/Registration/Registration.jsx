@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
 import Typography from '@material-ui/core/Typography';
+
+import { useNameValidation,
+  useEmailValidation,
+  usePassValidation
+ } from "../../utils/validation";
 
 import "./Registration.css";
 
@@ -14,6 +19,12 @@ export const Registration = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [nameWarning, setNameWarning] = useState("");
+    const [emailWarning, setEmailWarning] = useState("");
+    const [passWarning, setPassWarning] = useState("");
+    const [isNameValid, setNameValid] = useState(false);
+    const [isPassValid, setPassValid] = useState(false);
+    const [isEmailValid, setEmailValid] = useState(false);
 
     const handleClick = () => {
         return;
@@ -32,9 +43,9 @@ export const Registration = () => {
           const result = await axios(options);
           if(result) {
             alert("you are registered");
-            return <Redirect to='/login' />
+            const storage = window.localStorage;
+            storage.setItem("registered", "true");
           }
-          console.log("FETCH RESULT", result)
         } catch(error) {
           console.log("ERROR", error)
         }
@@ -44,13 +55,38 @@ export const Registration = () => {
     }, [registrData]);
 
     const createUser = (event) => {
-      event.preventDefault();
-      let registrData = {
-        name: name,
-        email: email,
-        password: password
+      event.preventDefault(); 
+      if(isNameValid && isPassValid && isEmailValid) {
+        let registrData = {
+          name: name,
+          email: email,
+          password: password
+        }
+        setRegistrData(JSON.stringify(registrData));
+      } else {
+        alert("Incorrect registration data")
       }
-      setRegistrData(JSON.stringify(registrData));
+    }
+
+    function handleNameChange(newName) {
+      setName(newName);
+      const isValid = useNameValidation(newName);
+      setNameValid(isValid);
+      isValid ? setNameWarning("") : setNameWarning("Enter your name");
+    }
+
+    function handleEmailChange(newEmail) {
+      setEmail(newEmail)
+      const isValid = useEmailValidation(newEmail)
+      setEmailValid(isValid)
+      isValid ? setEmailWarning("") : setEmailWarning("Enter a valid email address")
+    }
+
+    function handlePassChange(newPass) {
+      setPassword(newPass)
+      const isValid = usePassValidation(newPass)
+      setPassValid(isValid)
+      isValid ? setPassWarning("") : setPassWarning("Password must be more than 6 characters");
     }
 
     return (
@@ -64,20 +100,26 @@ export const Registration = () => {
                     label="Name" 
                     type="text"
                     value={name}
-                    onChange={(nameValue)=>setName(nameValue)}
-                    style={"form-item"}/>
+                    onChange={handleNameChange}
+                    style={"form-item"}
+                    helperText={nameWarning}
+                    />
                   <Input 
                     label="Email" 
                     type="email"
                     value={email}
-                    onChange={(emailValue)=>setEmail(emailValue)}
-                    style={"form-item"}/>
+                    onChange={handleEmailChange}
+                    style={"form-item"}
+                    helperText={emailWarning}
+                    />
                   <Input 
                     label="Password" 
                     type="text"
                     value={password}
-                    onChange={(passwordValue)=>setPassword(passwordValue)}
-                    style={"form-item"}/>
+                    onChange={handlePassChange}
+                    style={"form-item"}
+                    helperText={passWarning}
+                    />
                   <Button 
                     name="Registration" 
                     variant="contained" 
