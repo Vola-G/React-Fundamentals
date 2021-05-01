@@ -4,7 +4,7 @@ module.exports = {
         "es2021": true
     },
     "extends": [
-        // "eslint:recommended",
+        "eslint:recommended",
         "plugin:react/recommended"
     ],
     "parserOptions": {
@@ -19,6 +19,6 @@ module.exports = {
     ],
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "react/prop-types": "off",
+        "react/prop-types": "off"
     }
 };
