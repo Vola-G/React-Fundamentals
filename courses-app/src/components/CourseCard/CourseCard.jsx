@@ -70,7 +70,7 @@ export default function CourseCard(props) {
               </Typography>
             </div>
             <div>
-              <Link to={`/course-info/${id}`}>
+              <Link to={`/courses/${id}`}>
                 <Button name="Show course" variant="contained" color="primary" onClick={showCourse} className={classes.btn}/>
               </Link>
             </div>
