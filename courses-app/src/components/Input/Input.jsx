@@ -1,6 +1,6 @@
 import TextField from '@material-ui/core/TextField';
 
-export default function Input({ label, value, inputType, onChange, style, helpText }) {
+export default function Input({ label, value, inputType, onChange, style, helperText }) {
 
   function handleChange(event) {
     onChange(event.target.value) 
@@ -15,7 +15,7 @@ export default function Input({ label, value, inputType, onChange, style, helpTe
           value={value}
           className={style}
           onChange={handleChange}
-          helperText={helpText}
+          helperText={helperText}
         />
     )
 }
