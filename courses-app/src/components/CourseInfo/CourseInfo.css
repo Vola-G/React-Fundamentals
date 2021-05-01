@@ -5,7 +5,7 @@
 }
 
 .course-title {
-    text-align: center;
+    margin-top: 30px;
 }
 
 .course-info_container {
@@ -14,9 +14,9 @@
 }
 
 .course-info_description {
-    width: 60%;
+    width: 70%;
 }
 
 .course-info_params {
-    width: 35%;
+    width: 30%;
 }

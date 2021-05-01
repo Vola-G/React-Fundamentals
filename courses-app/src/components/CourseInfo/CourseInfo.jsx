@@ -1,5 +1,5 @@
 // import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 // import axios from 'axios';
 
 import { ParametersTitle } from "../../components/ParametersTitle/ParametersTitle";
@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
+import "./CourseInfo.css"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,60 +35,41 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-export const CourseInfo = ({ courses }) => {
-    const classes = useStyles();
-    // const [course, setCourse] = useState();
-    // const loginData = JSON.parse(window.localStorage.getItem("currentUser"));
-    // const token = loginData.token;
-    // const { id } = useParams();
-
-    // useEffect(()=>{
-    //     const fetchData = async () => {
-    //     const options = {
-    //         method: 'GET',
-    //         headers: { 
-    //             'accept': '*/*'
-    //             // 'Authorization': {token} 
-    //         },
-    //         url: `http://localhost:3000/courses/${id}`
-    //     };
-    //     try {
-    //       const result = await axios(options);
-    //       setCourse(result.data.result);
-    //       console.log("FETCH RESULT", result)
-    //     } catch(error) {
-    //       console.log("ERROR", error)
-    //     }
-    //   }
-    //   fetchData();
-    // }, [])
-
-    function handleBack() {
-        return <Redirect to='/courses' />
+export const CourseInfo = ({ courses, authorsList}) => {
+    if(!courses && !authorsList) {
+        return;
     }
+    const { courseId } = useParams();
+    const classes = useStyles();
+    const currentCourse = courses.find(course => course.id === courseId);
+    const { id, title, description, creationDate, duration, authors } = currentCourse;
+    const courseAuthors = [];
+    authorsList.forEach(author => {
+      if (authors.includes(author.id)) {
+        courseAuthors.push(author.name);
+      }
+    });
 
-    // const index = courses.findIndex(course => course.id === id);
-    // const course = courses[index];
     return (
-        // {isLoading ? (<p>Loading </p>) : (<p> Pew</p>)}
         <div className={"container-center"}>
             <div className={"nav-container"}>
-                <Button 
-                    name="Back to courses" 
-                    color="primary" 
-                    onClick={handleBack}
-                    icon={<ArrowBackIosIcon/>}/>
+                <Link to="/courses">
+                    <Button 
+                        name="Back to courses" 
+                        color="primary" 
+                        icon={<ArrowBackIosIcon/>}/>
+                </Link>
             </div>
             <div className={"course-title"} >
                 <ParametersTitle 
-                    title={courses.title}
+                    title={title}
                     variant="h1" 
                     component="h1"/>
             </div>
             <div className={"course-info_container"}>
                 <div className={"course-info_description"}>
                     <Typography variant="body1"  component="p">
-                        {/* {course.description} */}
+                        {description}
                     </Typography>
                 </div>
                 <div className={"course-info_params"}>
@@ -95,21 +78,28 @@ export const CourseInfo = ({ courses }) => {
                         color="textSecondary" 
                         component="h5" 
                         className={classes.infoElem}>
-                        <b>Authors:</b>
+                        <b>ID:</b> {id}
                     </Typography>
                     <Typography 
                         variant="body2" 
                         color="textSecondary" 
                         component="h5" 
                         className={classes.infoElem}>
-                        {/* <b>Duration:</b> {course.duration} */}
+                        <b>Duration:</b> {duration}
                     </Typography>
                     <Typography 
                         variant="body2" 
                         color="textSecondary" 
                         component="h5" 
                         className={classes.infoElem}>
-                        {/* <b>Created:</b> {course.creationDate} */}
+                        <b>Created:</b> {creationDate}
+                    </Typography>
+                    <Typography 
+                        variant="body2" 
+                        color="textSecondary" 
+                        component="h5" 
+                        className={classes.infoElem}>
+                        <b>Authors:</b> {courseAuthors.join(", ")}
                     </Typography>
                 </div>
             </div>
