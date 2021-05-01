@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  BrowserRouter as Router, 
   Redirect,
-  Route
+  Route,
+  Switch
 } from "react-router-dom";
 import axios from 'axios';
 
@@ -13,46 +13,65 @@ import { Registration } from "pages/Registration/Registration";
 import { CourseInfo } from "components/CourseInfo/CourseInfo";
 
 import { NewCourseForm } from "pages/NewCourseForm/NewCourseForm";
-import { mockedCourseList, mockedAddAuthor } from "localService/Mock";
+// import { mockedCourseList, mockedAddAuthor } from "localService/Mock";
 
 import './App.css';
 
 function App() {
   const [user, setUser] = useState();
   const [isLogin, setLogin] = useState(false);
-  const [courses, setCourses] = useState(mockedCourseList);
-  const [authors, setAuthors] = useState(mockedAddAuthor);
-  // const [courses, setCourses] = useState(mockedCourseList);
+  // const [isRegistered, setRegistered] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     const currentUser = window.localStorage.getItem("currentUser");
     if(currentUser) {
+      const token = JSON.parse(currentUser).token
       setUser(JSON.parse(currentUser));
-      setLogin(true);
-    } else {
-      return <Redirect to='/login' />
+      token ? setLogin(true) : setLogin(false);
     }
+    const registered = window.localStorage.getItem("registered");
+    console.log(registered)
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCourses = async () => {
       const options = {
           method: 'GET',
           headers: { 
               'accept': '*/*'
-              // 'Authorization': {token} 
           },
           url: `http://localhost:3000/courses/all`
       };
       try {
         const result = await axios(options);
         setCourses(result.data.result);
+      } catch(error) {
+        alert(error.message)
+      }
+    }
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      const options = {
+          method: 'GET',
+          headers: { 
+              'accept': '*/*'
+          },
+          url: `http://localhost:3000/authors/all`
+      };
+      try {
+        const result = await axios(options);
+        setAuthors(result.data.result)
         console.log("FETCH RESULT", result)
       } catch(error) {
         console.log("ERROR", error)
       }
     }
-    fetchData();
+    fetchAuthors();
   }, []);
 
   function handleAddCourse(newCourse) {
@@ -70,27 +89,28 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Header isLogin={isLogin} user={user} />
-        <Route exact path={"/courses"}>
-          <Courses courses={courses} authors={authors}/>
-        </Route>
-        <Route exact path={"/create-course"}>
-          <NewCourseForm 
-              onAddCourse={handleAddCourse}
-              onAddAuthor={handleAddAuthors}/>
-        </Route>
-        <Route path={"/course-info/:id"}>
-          <CourseInfo courses={courses} authors={authors}/>
-        </Route>
-        <Route exact path={"/login"}>
-          <Login onChangeUser={handleChangeUser}/>
-        </Route>
-        <Route exact path={"/registration"}>
-          <Registration />
-        </Route>
-        <Redirect from={"/"} to={"/courses"}/>
-      </Router>
+      <Header isLogin={isLogin} user={user} />
+        <Switch>
+          <Route path="/courses/add">
+            <NewCourseForm 
+                onAddCourse={handleAddCourse}
+                onAddAuthor={handleAddAuthors}/>
+          </Route>
+          <Route path="/courses/:courseId">
+            <CourseInfo courses={courses} authorsList={authors}/>
+          </Route>
+          <Route path="/courses">
+            <Courses courses={courses} authors={authors}/>
+          </Route>
+          <Route path="/login">
+            <Login onChangeUser={handleChangeUser}/>
+          </Route>
+          <Route path="/registration">
+            <Registration />
+          </Route>
+        </Switch>
+        <Redirect from="/" to="/courses"/>
+        {isLogin ? <Redirect to="/courses"/> : <Redirect to="/login"/> }
     </>
   );
 }
