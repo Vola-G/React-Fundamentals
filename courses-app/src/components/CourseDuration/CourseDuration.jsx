@@ -1,16 +1,20 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import Input from "../Input/Input";
 import { ParametersTitle } from "../ParametersTitle/ParametersTitle";
 import Typography from '@material-ui/core/Typography';
+
 import { formatTime } from '../../utils';
+
 import "./CourseDuration.css";
 
-export function CourseDuration(props) {
+export function CourseDuration({ onAddDuration }) {
     const [value, setValue] = useState("");
 
     function handleChange(newValue) {
         setValue(newValue);
-        props.onAddDuration(formatTime(newValue))
+        onAddDuration(formatTime(newValue))
     }
 
     return(
@@ -24,4 +28,8 @@ export function CourseDuration(props) {
             </div>
         </div>
     )
+}
+
+CourseDuration.propTypes = {
+    onAddDuration: PropTypes.func
 }

@@ -1,9 +1,13 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 import { CreateNewAuthor } from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
 import { mockedAddAuthor } from "../../localService/Mock";
 import { ManageAuthor } from "../ManageAuthor/ManageAuthor";
+
 import { getAuthorsId } from "../../utils";
+
 import "./ParametersForm.css";
 
 
@@ -56,4 +60,9 @@ export function ParametersForm(props) {
         </div>
 
     )
+}
+
+ParametersForm.propTypes = {
+    onAddAuthor: PropTypes.func,
+    onParametersChange: PropTypes.func
 }

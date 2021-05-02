@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Typography from '@material-ui/core/Typography';
 
 export function ParametersTitle({ title, variant, component }) {
@@ -6,4 +8,10 @@ export function ParametersTitle({ title, variant, component }) {
             {title}
         </Typography>
     )
+}
+
+ParametersTitle.propTypes = {
+    title: PropTypes.string,
+    variant: PropTypes.string, 
+    component: PropTypes.string
 }

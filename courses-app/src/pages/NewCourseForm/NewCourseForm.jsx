@@ -1,14 +1,17 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+import uuid from 'react-uuid';
+
 import { DescriptionForm } from "../../components/DescriptionForm/DescriptionForm";
 import { ParametersForm } from "../../components/ParametersForm/ParametersForm";
-import uuid from 'react-uuid';
+
 import { formatDate } from "../../utils"
 
-export function NewCourseForm(props) {
+export function NewCourseForm({ onAddCourse, onAddAuthor }) {
     const [parsmeters, setParameters] = useState({});
 
     function handleClick(descrip) {
-        props.onAddCourse({
+        onAddCourse({
             "id": uuid(), 
             ...descrip,
             "creationDate": formatDate(), 
@@ -20,7 +23,7 @@ export function NewCourseForm(props) {
     }
 
     function handleAddAuthor(newAuthor) {
-        props.onAddAuthor(newAuthor)
+        onAddAuthor(newAuthor)
     }
 
 
@@ -34,4 +37,9 @@ export function NewCourseForm(props) {
                 />
         </div>
     )
+}
+
+NewCourseForm.propTypes = {
+    onAddCourse: PropTypes.func, 
+    onAddAuthor: PropTypes.func
 }

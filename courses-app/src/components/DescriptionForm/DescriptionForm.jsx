@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { TextArea } from "../TextArea/TextArea";
-
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
 import "./DescriptionForm.css"
 
-export function DescriptionForm(props) {
+export function DescriptionForm({ onClick }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
 
     function handleClick() {
-        props.onClick({"title": title, "description": description})
+        onClick({"title": title, "description": description})
     }
 
     function handleTitleChange(newTitle) {
@@ -42,3 +43,7 @@ export function DescriptionForm(props) {
         </div>
     )
 }
+
+DescriptionForm.propTypes = {
+    onClick: PropTypes.func
+  }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { useForm } from "react-hook-form";
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
@@ -99,4 +99,8 @@ export const Login = ({ onChangeUser }) => {
           </div>
         </div>
     )  
+}
+
+Login.propTypes = {
+  onChangeUser: PropTypes.func
 }

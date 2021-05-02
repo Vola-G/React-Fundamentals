@@ -1,11 +1,16 @@
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { ParametersTitle } from "../ParametersTitle/ParametersTitle";
-import "./CreateNewAuthor.css";
-import { useState } from 'react';
+
 import { authorFactory } from '../../utils';
 
-export function CreateNewAuthor(props) {
+import "./CreateNewAuthor.css";
+
+
+export function CreateNewAuthor({ onCreateAuthor }) {
     const [value, setValue] = useState("");
 
     function handleChange(newAuthor) {
@@ -13,7 +18,7 @@ export function CreateNewAuthor(props) {
     }
 
     function handleClick() {
-        props.onCreateAuthor(authorFactory(value));
+        onCreateAuthor(authorFactory(value));
         setValue("");
     }
 
@@ -28,4 +33,8 @@ export function CreateNewAuthor(props) {
             </div>
         </div>
     );
+}
+
+CreateNewAuthor.propTypes = {
+    onCreateAuthor: PropTypes.func
 }

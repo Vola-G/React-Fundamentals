@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -77,4 +78,14 @@ export default function CourseCard(props) {
           </CardContent>
       </Card>
     )
+}
+
+CourseCard.propTypes = {
+  course: PropTypes.object,
+  authors: PropTypes.object,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  duration: PropTypes.number,
+  creationDate: PropTypes.string,
+  id: PropTypes.string
 }

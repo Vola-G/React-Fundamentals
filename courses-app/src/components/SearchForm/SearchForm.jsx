@@ -1,6 +1,9 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+
 import "../SearchForm/SearchForm.css"
 
 export default function SearchForm({ searchTerm, onChangeTerm }) {
@@ -20,4 +23,9 @@ export default function SearchForm({ searchTerm, onChangeTerm }) {
             <Button name="Search" variant="contained" color="primary" onClick={handleClick}/>
         </form>
     )
+}
+
+SearchForm.propTypes = {
+    searchTerm: PropTypes.string,
+    onChangeTerm: PropTypes.func
 }

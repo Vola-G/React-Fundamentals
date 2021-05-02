@@ -1,7 +1,11 @@
+import PropTypes from 'prop-types';
+import uuid from 'react-uuid';
+
 import { ParametersTitle } from "../ParametersTitle/ParametersTitle";
 import { AuthorAction } from "../AuthorAction/AuthorAction";
+
 import "./ManageAuthor.css";
-import uuid from 'react-uuid';
+
 
 export function ManageAuthor({ title, authors, handleAuthor, actionName }) {
 
@@ -20,4 +24,11 @@ export function ManageAuthor({ title, authors, handleAuthor, actionName }) {
             </div>
         </div>
     );
+}
+
+ManageAuthor.propTypes = {
+    title: PropTypes.string,
+    authors: PropTypes.array,
+    handleAuthor: PropTypes.func,
+    actionName: PropTypes.string,
 }

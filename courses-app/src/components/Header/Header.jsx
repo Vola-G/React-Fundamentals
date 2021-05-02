@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 
 import { Login } from "pages/Login/Login";
 import { UserBar } from "components/Header/UserBar/UserBar";
@@ -35,4 +35,9 @@ export default function Header({ isLogin, user }) {
             </nav>
         </div>
     );
+}
+
+Header.propTypes = {
+    isLogin: PropTypes.bool,
+    user: PropTypes.object
 }

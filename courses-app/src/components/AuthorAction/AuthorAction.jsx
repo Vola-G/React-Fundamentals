@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Button from "../Button/Button";
 
 import Typography from '@material-ui/core/Typography';
@@ -27,3 +29,9 @@ export function AuthorAction({ author, handleAuthor, action }) {
         </div>
     );
 }
+
+AuthorAction.propTypes = {
+    author: PropTypes.object,
+    handleAuthor: PropTypes.func,
+    action: PropTypes.string
+  }

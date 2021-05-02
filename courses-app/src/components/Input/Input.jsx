@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import TextField from '@material-ui/core/TextField';
 
 export default function Input({ label, value, inputType, onChange, style, helperText }) {
@@ -18,4 +20,13 @@ export default function Input({ label, value, inputType, onChange, style, helper
           helperText={helperText}
         />
     )
+}
+
+Input.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  inputType: PropTypes.string,
+  onChange: PropTypes.func,
+  style: PropTypes.string,
+  helperText: PropTypes.string
 }

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import TextField from '@material-ui/core/TextField';
   
   export function TextArea({ label, value, onChange }) {
@@ -18,3 +20,9 @@ import TextField from '@material-ui/core/TextField';
           />
     );
   }
+
+TextArea.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func
+}

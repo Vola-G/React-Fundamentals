@@ -1,6 +1,5 @@
-// import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-// import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import { ParametersTitle } from "../../components/ParametersTitle/ParametersTitle";
 import Button from '../Button/Button';
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-export const CourseInfo = ({ courses, authorsList}) => {
+export const CourseInfo = ({ courses, authorsList }) => {
     if(!courses && !authorsList) {
         return;
     }
@@ -63,8 +62,9 @@ export const CourseInfo = ({ courses, authorsList}) => {
             <div className={"course-title"} >
                 <ParametersTitle 
                     title={title}
-                    variant="h1" 
-                    component="h1"/>
+                    color="primary"
+                    variant="h2" 
+                    component="h2"/>
             </div>
             <div className={"course-info_container"}>
                 <div className={"course-info_description"}>
@@ -105,4 +105,15 @@ export const CourseInfo = ({ courses, authorsList}) => {
             </div>
         </div>
     );
+}
+
+CourseInfo.propTypes = {
+    courses: PropTypes.object,
+    authorsList: PropTypes.object,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    creationDate: PropTypes.string,
+    duration: PropTypes.number,
+    authors: PropTypes.string
 }
