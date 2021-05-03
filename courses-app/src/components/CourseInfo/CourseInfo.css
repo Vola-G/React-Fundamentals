@@ -1,0 +1,23 @@
+.nav-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.course-title {
+    margin-top: 30px;
+}
+
+.course-info_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.course-info_description {
+    margin-top: 10px;
+    width: 70%;
+}
+
+.course-info_params {
+    width: 30%;
+}

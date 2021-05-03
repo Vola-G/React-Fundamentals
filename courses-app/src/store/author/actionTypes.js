@@ -1,0 +1,3 @@
+{
+    type: ADD_AUTHOR,
+}

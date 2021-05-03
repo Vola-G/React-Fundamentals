@@ -1,0 +1,10 @@
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    margin-right: 20px;
+    text-decoration: none;
+}
