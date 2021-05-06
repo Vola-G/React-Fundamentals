@@ -7,8 +7,6 @@ import Typography from '@material-ui/core/Typography';
 
 import { formatTime } from '../../utils';
 
-import "./CourseDuration.css";
-
 export function CourseDuration({ onAddDuration }) {
     const [value, setValue] = useState("");
 
