@@ -5,6 +5,8 @@ import { ParametersTitle } from "../../components/ParametersTitle/ParametersTitl
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { connect } from "react-redux";
+
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-export const CourseInfo = ({ courses, authorsList }) => {
+const CourseInfo = ({ courses, authorsList }) => {
     if(!courses && !authorsList) {
         return;
     }
@@ -117,3 +119,11 @@ CourseInfo.propTypes = {
     duration: PropTypes.number,
     authors: PropTypes.string
 }
+
+function mapStateToProps(state) {
+    const { courses } = state.coursesReducer
+    const { authors: authorsList } = state.authorsReducer
+    return { courses, authorsList }
+}
+
+export default connect(mapStateToProps)(CourseInfo)

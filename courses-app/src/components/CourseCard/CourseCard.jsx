@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { deleteCourse } from "store/courses/actionCreators";
+
 import { makeStyles } from '@material-ui/core/styles';
 import { formatTime } from '../../utils';
+
+import "./CourseCard.css";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,22 +35,22 @@ const useStyles = makeStyles((theme) => ({
     infoElem: {
       margin: "10px 0",
       textAlign: "end"
-    },
+    }
 
   }));
   
-export default function CourseCard(props) {
-    const { title, description, duration, creationDate, id } = props.course;
+function CourseCard({ course, authorsList, deleteCourse}) {
+    const { title, description, duration, creationDate, id, authors } = course;
     const classes = useStyles();
     const courseAuthors = [];
-    props.authors.forEach(author => {
-      if (props.course.authors.includes(author.id)) {
+    authorsList.forEach(author => {
+      if (authors.includes(author.id)) {
         courseAuthors.push(author.name);
       }
     });
 
-    function showCourse() {
-      return;
+    function removeCourse() {
+      deleteCourse(id)
     }
 
     return (
@@ -72,8 +77,9 @@ export default function CourseCard(props) {
             </div>
             <div>
               <Link to={`/courses/${id}`}>
-                <Button name="Show course" variant="contained" color="primary" onClick={showCourse} className={classes.btn}/>
+                <Button name="Show course" variant="contained" color="primary" style="action-button"/>
               </Link>
+              <Button name="Delete course" variant="contained" color="primary" onClick={removeCourse} />
             </div>
           </CardContent>
       </Card>
@@ -81,11 +87,19 @@ export default function CourseCard(props) {
 }
 
 CourseCard.propTypes = {
-  course: PropTypes.object,
-  authors: PropTypes.object,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  duration: PropTypes.number,
-  creationDate: PropTypes.string,
-  id: PropTypes.string
+  course: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    creationDate: PropTypes.string,
+    duration: PropTypes.number,
+    authors: PropTypes.array
+  }).isRequired,
+    authorsList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string
+  })).isRequired,
+  deleteCourse: PropTypes.func.isRequired
 }
+
+export default connect(null, {deleteCourse})(CourseCard)
