@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+
+import { authorize } from "../../store/user/actionCreators";
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
@@ -10,45 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import "./Login.css";
 
 
-
-export const Login = ({ onChangeUser }) => {
-    const [loginData, setloginData] = useState({});
-    const [user, setUser] = useState({});
+const Login = ({ authorize }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
-    const handleClick = () => {
-        return;
-    }
-
-    useEffect(() => {
-      if(Object.keys(user).length !== 0) {
-        const storage = window.localStorage;
-        storage.setItem("currentUser", JSON.stringify(user));
-        onChangeUser(user);
-      }
-    }, [user])
-
-    useEffect(()=>{
-      console.log(loginData);
-      const fetchData = async () => {
-        const options = {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          data: JSON.stringify(loginData),
-          url: "http://localhost:3000/login"
-        };
-        try {
-          const result = await axios(options);
-          setUser({...{loginData}, "token": result.data.result});
-          alert("you are logged in")
-        } catch(error) {
-          console.log("ERROR", error)
-        }
-      }
-      fetchData();
-    }, [loginData]);
+    const history = useHistory();
 
     const createUser = async (event) => {
       event.preventDefault();
@@ -56,7 +23,8 @@ export const Login = ({ onChangeUser }) => {
         email: email,
         password: password
       }
-      setloginData(loginData);
+      await authorize(loginData)
+      history.push("/courses")
     }
 
     return (
@@ -85,7 +53,6 @@ export const Login = ({ onChangeUser }) => {
                     name="Login" 
                     variant="contained" 
                     color="primary" 
-                    onCkick={handleClick} 
                     type="submit" 
                     className={"form-item"}/>
                   <Typography 
@@ -102,5 +69,7 @@ export const Login = ({ onChangeUser }) => {
 }
 
 Login.propTypes = {
-  onChangeUser: PropTypes.func
+  authorize: PropTypes.func.isRequired,
 }
+
+export default connect(null, {authorize})(Login)
