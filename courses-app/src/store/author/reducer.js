@@ -9,7 +9,7 @@ export function authorsReducer(state = authorsInitialState, action) {
         case GET_AUTHORS: 
             return {
                 ...state, 
-                authors: [...state.authors, ...action.payload]
+                authors: [...action.payload]
             }
         case DELETE_AUTHOR: 
             return {

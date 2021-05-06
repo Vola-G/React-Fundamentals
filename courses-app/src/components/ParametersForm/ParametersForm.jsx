@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import CreateNewAuthor from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
 import { ManageAuthor } from "../ManageAuthor/ManageAuthor";
+
+import { getAuthors } from "store/author/actionCreators";
 
 import { getAuthorsId } from "../../utils";
 
@@ -15,6 +17,13 @@ function ParametersForm(props) {
     let [authorsList, setAuthorsList] = useState(props.authors);
     let [authors, setAuthors] = useState([]);
     let [duration, setDuration] = useState("");
+    const dispathc = useDispatch();
+
+    useEffect(()=> {
+        !authorsList.length ? dispathc(getAuthors()) : null
+    }, [])
+
+    useEffect(()=> setAuthorsList(props.authors), [props.authors])
 
     function handleCreateAuthor(newAuthor) {
         setAuthorsList([...authorsList, newAuthor]);
@@ -69,8 +78,8 @@ ParametersForm.propTypes = {
 }
 
 function mapStateToProps(state) {
-    const { authors } = state.authorsReducer
+    const authors = state.authorsReducer
     return authors
 }
 
-export default connect(mapStateToProps)(ParametersForm)
+export default connect(mapStateToProps, {getAuthors})(ParametersForm)

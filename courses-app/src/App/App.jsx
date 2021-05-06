@@ -48,11 +48,11 @@ const App = (props) => {
     <>
       <Header user={user}/>
         <Switch>
-          <Route path="/courses/add">
-            <CreateCourse 
+          <Route path="/courses/add" component={CreateCourse}/>
+            {/* <CreateCourse 
                 // onAddCourse={handleAddCourse}
                 onAddAuthor={handleAddAuthors}/>
-          </Route>
+          </Route> */}
           <Route path="/courses/:courseId" component={CourseInfo}/>
           <Route path="/courses" component={Courses}/>
           <Route path="/login" component={Login}/>
