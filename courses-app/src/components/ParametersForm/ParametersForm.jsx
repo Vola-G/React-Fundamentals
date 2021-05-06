@@ -1,9 +1,9 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
-import { CreateNewAuthor } from "../CreateNewAuthor/CreateNewAuthor";
+import CreateNewAuthor from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
-import { mockedAddAuthor } from "../../localService/Mock";
 import { ManageAuthor } from "../ManageAuthor/ManageAuthor";
 
 import { getAuthorsId } from "../../utils";
@@ -11,8 +11,8 @@ import { getAuthorsId } from "../../utils";
 import "./ParametersForm.css";
 
 
-export function ParametersForm(props) {
-    let [authorsList, setAuthorsList] = useState(mockedAddAuthor);
+function ParametersForm(props) {
+    let [authorsList, setAuthorsList] = useState(props.authors);
     let [authors, setAuthors] = useState([]);
     let [duration, setDuration] = useState("");
 
@@ -64,5 +64,13 @@ export function ParametersForm(props) {
 
 ParametersForm.propTypes = {
     onAddAuthor: PropTypes.func,
-    onParametersChange: PropTypes.func
+    onParametersChange: PropTypes.func,
+    authors: PropTypes.object
 }
+
+function mapStateToProps(state) {
+    const { authors } = state.authorsReducer
+    return authors
+}
+
+export default connect(mapStateToProps)(ParametersForm)
