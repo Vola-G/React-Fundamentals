@@ -1,17 +1,28 @@
-import { createStore } from "redux";
+import { 
+    createStore, 
+    combineReducers, 
+    applyMiddleware, 
+    compose 
+} from "redux";
+import thunk from "redux-thunk";
 
+import { coursesReducer } from "./courses/reducer";
+import { userReducer } from "./user/reducer";
+import { authorsReducer } from "./author/reducer";
 
-const store = {
-    user: {
-        isAuth: false,
-        name: "",
-        email: "",
-        token: "string"
-    },
-    courses: [],
-    authors: [] 
-}
+const rootReducer = combineReducers({
+    coursesReducer,
+    userReducer,
+    authorsReducer
+});
 
-const reducer = (state) => state;
+const middleware = [thunk];
 
-export default createStore(reducer, store)
+const store = createStore(rootReducer, compose(
+    applyMiddleware(
+        ...middleware
+    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+));
+
+export default store
