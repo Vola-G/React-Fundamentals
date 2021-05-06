@@ -10,8 +10,3 @@ export function formatDate() {
     let currentDate = new Date();
     return currentDate.toLocaleDateString('ru-RU');
 }
-
-export function getAuthorsId(authorsList) {
-    let authorsId = authorsList.map(author => author.id);
-    return {"authors": authorsId}
-}
