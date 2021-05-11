@@ -7,21 +7,21 @@ import Typography from '@material-ui/core/Typography';
 
 import { formatTime } from '../../utils';
 
-export function CourseDuration({ onAddDuration }) {
-    const [value, setValue] = useState("");
+export function CourseDuration({ value, onAddDuration }) {
+    const [duration, setDuration] = useState(value || "");
 
-    function handleChange(newValue) {
-        setValue(newValue);
-        onAddDuration(formatTime(newValue))
+    function handleChange(time) {
+        setDuration(time);
+        onAddDuration(time)
     }
 
     return(
         <div className={"parameter-block"}>
             <ParametersTitle title="Duration" variant="h4" component="h2"/>
             <div className={"parameter-block_form"}>
-                <Input label="Duration" value={value} type="number" onChange={handleChange}/>
+                <Input label="Duration" value={duration} type="number" onChange={handleChange}/>
                 <Typography gutterBottom variant="h4" component="h4" style={{textAlign: "start", marginTop: "50px"}}>
-                    Duration: <b>{formatTime(value)}</b> hours
+                    Duration: <b>{formatTime(duration)}</b> hours
                 </Typography>
             </div>
         </div>
@@ -29,5 +29,6 @@ export function CourseDuration({ onAddDuration }) {
 }
 
 CourseDuration.propTypes = {
+    value: PropTypes.number,
     onAddDuration: PropTypes.func
 }
