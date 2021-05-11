@@ -5,6 +5,7 @@ import {
     compose 
 } from "redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { coursesReducer } from "./courses/reducer";
 import { userReducer } from "./user/reducer";
@@ -18,11 +19,8 @@ const rootReducer = combineReducers({
 
 const middleware = [thunk];
 
-const store = createStore(rootReducer, compose(
-    applyMiddleware(
-        ...middleware
-    ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+const composedEnhancer = composeWithDevTools(applyMiddleware(...middleware));
+
+const store = createStore(rootReducer, composedEnhancer);
 
 export default store
