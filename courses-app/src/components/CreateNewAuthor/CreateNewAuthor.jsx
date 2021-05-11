@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { saveAuthors } from "store/author/actionCreators";
+import { saveAuthorsThunk } from "store/author/thunk";
 
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import { ParametersTitle } from "../ParametersTitle/ParametersTitle";
 
-import { authorFactory } from '../../utils';
-
-function CreateNewAuthor() {
+export function CreateNewAuthor() {
     const [value, setValue] = useState("");
     const dispathc = useDispatch();
 
@@ -19,7 +17,7 @@ function CreateNewAuthor() {
     }
 
     function handleClick() {
-        dispathc(saveAuthors(authorFactory(value)));
+        dispathc(saveAuthorsThunk(value));
         setValue("");
     }
 
@@ -39,6 +37,3 @@ function CreateNewAuthor() {
 CreateNewAuthor.propTypes = {
     onCreateAuthor: PropTypes.func
 }
-
-
-export default connect(null, {saveAuthors})(CreateNewAuthor);
