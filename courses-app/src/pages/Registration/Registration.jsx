@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { registrationThunk } from "../../store/user/thunk"
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
@@ -25,33 +27,16 @@ export const Registration = () => {
     const [isNameValid, setNameValid] = useState(false);
     const [isPassValid, setPassValid] = useState(false);
     const [isEmailValid, setEmailValid] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleClick = () => {
         return;
     }
 
     useEffect(()=>{
-      console.log(registrData);
-      const fetchData = async () => {
-        const options = {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          data: registrData,
-          url: "http://localhost:3000/register"
-        };
-        try {
-          const result = await axios(options);
-          if(result) {
-            alert("you are registered");
-            const storage = window.localStorage;
-            storage.setItem("registered", "true");
-          }
-        } catch(error) {
-          console.log("ERROR", error)
-        }
-      }
-      fetchData();
-
+      dispatch(registrationThunk(registrData));
+      history.push("/login")
     }, [registrData]);
 
     const createUser = (event) => {

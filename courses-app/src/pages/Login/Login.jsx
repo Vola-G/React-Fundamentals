@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { authorize } from "../../store/user/actionCreators";
+import { authorizeThunk } from "../../store/user/thunk";
 
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
@@ -12,18 +12,19 @@ import Typography from '@material-ui/core/Typography';
 import "./Login.css";
 
 
-const Login = ({ authorize }) => {
+export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
+    const dispatch = useDispatch();
 
-    const createUser = async (event) => {
+    const createUser = (event) => {
       event.preventDefault();
       let loginData = {
         email: email,
         password: password
       }
-      await authorize(loginData)
+      dispatch(authorizeThunk(loginData))
       history.push("/courses")
     }
 
@@ -71,5 +72,3 @@ const Login = ({ authorize }) => {
 Login.propTypes = {
   authorize: PropTypes.func.isRequired,
 }
-
-export default connect(null, {authorize})(Login)
