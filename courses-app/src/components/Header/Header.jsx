@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 import { logOut } from "store/user/actionCreators";
 
@@ -9,12 +9,16 @@ import { GuestBar } from "components/Header/GuestBar/GuestBar";
 
 import SchoolIcon from '@material-ui/icons/School';
 import "./Header.css";
+import { useEffect } from "react";
 
-function Header(props) {
+function Header(user) {
+    const dispatch = useDispatch();
     const onLogout = () => {
-        props.logOut()
+        dispatch(logOut())
         console.log("LOGOUT")
     }
+
+    // useEffect(()=> {}, [user])
 
     return (
         <div className={"header"}>
@@ -28,7 +32,7 @@ function Header(props) {
                     </Link>
                 </div>
                 <div className={"navbar-right"}>
-                    { props.user.isAuth ? <UserBar user={props.user.email} onClick={onLogout}/> : <GuestBar/> }
+                    { (user && user.isAuth) ? <UserBar user={user.name ? user.name : user.email} onClick={onLogout}/> : <GuestBar/> }
                 </div>
             </nav>
         </div>
@@ -45,10 +49,10 @@ Header.propTypes = {
     logOut: PropTypes.func
 }
 
-// function mapStateToProps(state) {
-//     const user = state.userReducer
-//     return user
-// }
+function mapStateToProps(state) {
+    const user = state.userReducer
+    return user
+}
 
 
-export default connect(null, {logOut})(Header)
+export default connect(mapStateToProps)(Header)
