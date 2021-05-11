@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import { TextArea } from "../TextArea/TextArea";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import "./DescriptionForm.css"
+import "./CreateCourse.css"
 
 export function DescriptionForm({ onClick }) {
     const [title, setTitle] = useState('');

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import CreateNewAuthor from "../CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../CourseDuration/CourseDuration";
@@ -27,7 +27,6 @@ function ParametersForm(props) {
 
     function handleCreateAuthor(newAuthor) {
         setAuthorsList([...authorsList, newAuthor]);
-        props.onAddAuthor(newAuthor);
     }
 
     function handleAddAuthor(name) {
@@ -82,4 +81,4 @@ function mapStateToProps(state) {
     return authors
 }
 
-export default connect(mapStateToProps, {getAuthors})(ParametersForm)
+export default connect(mapStateToProps)(ParametersForm)
