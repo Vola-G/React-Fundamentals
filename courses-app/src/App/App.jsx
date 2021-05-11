@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { 
   Redirect,
   Route,
@@ -7,60 +7,50 @@ import {
 import { connect, useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 
-import { getCourses } from "store/courses/actionCreators";
-import { getAuthors } from "store/author/actionCreators";
+import { PrivateRoute } from "../helpers/PrivatRoute";
+
+import { getCoursesThunk } from "store/courses/thunk";
+import { getAuthorsThunk } from "store/author/thunk";
+import { setCurrentUser } from "store/user/actionCreators";
 
 import Header from "components/Header/Header";
 import Courses from "pages/Courses/Courses";
-import Login from "pages/Login/Login";
+import { Login } from "pages/Login/Login";
 import { Registration } from "pages/Registration/Registration";
 import CourseInfo from "components/CourseInfo/CourseInfo";
+import UpdateCourse from "components/UpdateCourse/UpdateCourse";
 import CreateCourse from "pages/CreateCourse/CreateCourse";
 
 import './App.css';
 
 const App = (props) => {
   const { isAuth } = props;
-  const [user, setUser] = useState({isAuth: false, email: null});
-  const [isLogin, setLogin] = useState(false);
-  const [authors, setAuthors] = useState([]);
-  const dispathc = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const currentUser = window.localStorage.getItem("currentUser");
     if(currentUser) {
-      const token = JSON.parse(currentUser).token
-      setUser(JSON.parse(currentUser));
-      token ? setLogin(true) : setLogin(false);
+      dispatch(setCurrentUser(currentUser))
     }
   }, []);
 
   useEffect(()=> {
-    dispathc(getCourses())
-    dispathc(getAuthors())
+    dispatch(getCoursesThunk())
+    dispatch(getAuthorsThunk())
   }, [])
-
-  function handleAddAuthors(newAuthor) {
-    setAuthors([...authors, newAuthor])
-  }
 
   return (
     <>
-      <Header user={user}/>
+      <Header/>
         <Switch>
-          <Route path="/courses/add" component={CreateCourse}/>
-            {/* <CreateCourse 
-                // onAddCourse={handleAddCourse}
-                onAddAuthor={handleAddAuthors}/>
-          </Route> */}
+          <PrivateRoute path="/courses/add" component={CreateCourse}/>
+          <PrivateRoute path="/courses/update/:courseId" component={UpdateCourse}/>
           <Route path="/courses/:courseId" component={CourseInfo}/>
           <Route path="/courses" component={Courses}/>
           <Route path="/login" component={Login}/>
           <Route path="/registration" component={Registration}/>
         </Switch>
-        {isLogin ? <Redirect exact to="/courses"/> : <Redirect exact to="/login"/> }
-        {isLogin ? console.log('ISLOGIN') : console.log('NOTLOGIN') }
-        <Redirect from="/" to="/courses"/>
+        { isAuth ? <Redirect from="/" to="/courses"/> : <Redirect from="/" to="/login"/> }
     </>
   );
 }
@@ -75,4 +65,4 @@ function mapStateToProps(state) {
     return user
 }
 
-export default connect(mapStateToProps, {getCourses, getAuthors})(App);
+export default connect(mapStateToProps)(App);
