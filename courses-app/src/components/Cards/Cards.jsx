@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-import CourseCard from '../CourseCard/CourseCard';
+import { CourseCard } from '../CourseCard/CourseCard';
 
-export default function Cards({ courses, authors }) {
+export function Cards({ courses, authors }) {
     return (
         courses.map(course => {
             return (
