@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
-import Cards from "../../components/Cards/Cards";
+import { Cards } from "../../components/Cards/Cards";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import Button from "../../components/Button/Button";
 
@@ -44,7 +44,7 @@ Courses.propTypes = {
         title: PropTypes.string,
         description: PropTypes.string,
         creationDate: PropTypes.string,
-        duration: PropTypes.string,
+        duration: PropTypes.number,
         authors: PropTypes.array
     })).isRequired,
     authors:PropTypes.arrayOf(PropTypes.shape({

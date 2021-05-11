@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '../Button/Button';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 
-import { deleteCourse } from "store/courses/actionCreators";
+import { deleteCourseThunk } from "store/courses/thunk";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { formatTime } from '../../utils';
@@ -39,8 +42,10 @@ const useStyles = makeStyles((theme) => ({
 
   }));
   
-function CourseCard({ course, authorsList, deleteCourse}) {
+  export function CourseCard({ course, authorsList }) {
     const { title, description, duration, creationDate, id, authors } = course;
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.userReducer);
     const classes = useStyles();
     const courseAuthors = [];
     authorsList.forEach(author => {
@@ -50,7 +55,7 @@ function CourseCard({ course, authorsList, deleteCourse}) {
     });
 
     function removeCourse() {
-      deleteCourse(id)
+      dispatch(deleteCourseThunk(id))
     }
 
     return (
@@ -76,10 +81,24 @@ function CourseCard({ course, authorsList, deleteCourse}) {
               </Typography>
             </div>
             <div>
+            {
+              user?.email === "admin@email.com" ?
+              <>
+                <IconButton color="primary" aria-label="delete course" component="span" onClick={removeCourse}>
+                  <Delete />
+                </IconButton>
+                <Link to={{ pathname: `/courses/update/${id}`, id: id }}>
+                  <IconButton color="primary" aria-label="edit course" component="span">
+                    <Edit />
+                  </IconButton>
+                </Link>
+              </>
+              :
+              null //is such a check correct? can i put "null" as alternative condition?
+            }
               <Link to={`/courses/${id}`}>
                 <Button name="Show course" variant="contained" color="primary" style="action-button"/>
               </Link>
-              <Button name="Delete course" variant="contained" color="primary" onClick={removeCourse} />
             </div>
           </CardContent>
       </Card>
@@ -92,14 +111,15 @@ CourseCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     creationDate: PropTypes.string,
-    duration: PropTypes.number,
+    duration: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     authors: PropTypes.array
   }).isRequired,
     authorsList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string
   })).isRequired,
-  deleteCourse: PropTypes.func.isRequired
+  deleteCourse: PropTypes.func
 }
-
-export default connect(null, {deleteCourse})(CourseCard)
