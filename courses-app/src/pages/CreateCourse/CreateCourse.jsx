@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import uuid from 'react-uuid';
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 import { saveCourseThunk } from "../../store/courses/thunk"
 
@@ -23,16 +23,28 @@ import "./CreateCourse.css"
 
 export default function CreateCourse() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const authorsStore = useSelector(state => state.authorsReducer.authors);
     const [authorsList, setAuthorsList] = useState(authorsStore);
     const [courseAuthors, setCourseAuthors] = useState([]);
     const [duration, setDuration] = useState("");
+    const [btnBorder, setBtnBorder] = useState("outlined");
+    const [btnColor, setBtnColor] = useState("secondary");
+    const [isValid, setValid] = useState(false);
 
     useEffect(()=> {
         !authorsList.length ? dispatch(getAuthors()) : null
     }, [])
+
+    useEffect(()=> {
+        if(title && description && duration && courseAuthors.length) {
+            setBtnBorder("contained");
+            setBtnColor("primary");
+            setValid(true)
+        }
+    }, [title, description, duration, courseAuthors])
 
     useEffect(()=>{
         setAuthorsList(authorsStore)
@@ -40,16 +52,19 @@ export default function CreateCourse() {
 
     function handleClick() {
         const authors = courseAuthors.map(item => item.id)
-        dispatch(
-            saveCourseThunk({
-                title,
-                description,
-                duration,
-                authors,
-                "id": uuid(),
-                "creationDate": formatDate(),
-            })
-        )
+        if(isValid) {
+            dispatch(
+                saveCourseThunk({
+                    title,
+                    description,
+                    duration,
+                    authors,
+                    "id": uuid(),
+                    "creationDate": formatDate(),
+                })
+            )
+            history.push("/courses")
+        }
     }
 
     function handleTitleChange(newTitle) {
@@ -83,9 +98,7 @@ export default function CreateCourse() {
                         <Link to={"/courses"} className={"btn-back"}>
                             <Button name="Back to courses" color="primary" icon={<ArrowBackIosIcon/>}  />
                         </Link>
-                        <Link to={"/courses"}>
-                            <Button name="Create course" variant="contained" color="primary" onClick={handleClick}/>
-                        </Link>
+                        <Button name="Create course" variant={btnBorder} color={btnColor} onClick={handleClick}/>
                     </div>
                 </div>
                 <TextArea label="Description" value={description} onChange={handleDescriptionChange}/>

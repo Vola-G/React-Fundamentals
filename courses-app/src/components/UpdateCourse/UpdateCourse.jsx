@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import uuid from 'react-uuid';
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, Link } from "react-router-dom"
+import { Link, useLocation, useHistory } from "react-router-dom"
 
 import { updateCourseThunk } from "../../store/courses/thunk"
 
@@ -20,6 +19,7 @@ import "./UpdateCourse.css"
 
 export default function UpdateCourse() {
     const location = useLocation();
+    const history = useHistory();
     const dispatch = useDispatch();
     const authorsStore = useSelector(state => state.authorsReducer.authors);
     const { courses } = useSelector(state => state.coursesReducer);
@@ -29,27 +29,34 @@ export default function UpdateCourse() {
     const [title, setTitle] = useState(course?.title || '');
     const [description, setDescription] = useState(course?.description || '');
     const [duration, setDuration] = useState(course?.duration || 0);
+    const [btnBorder, setBtnBorder] = useState("outlined");
+    const [btnColor, setBtnColor] = useState("secondary");
+    const [isValid, setValid] = useState(false);
 
-    // useEffect(()=> {
-    //     !authorsList.length ? dispatch(getAuthors()) : null
-    // }, [])
+    useEffect(()=> {
+        if(title && description && duration && courseAuthors.length) {
+            setBtnBorder("contained")
+            setBtnColor("primary")
+            setValid(true)
+        }
+    }, [title, description, duration, courseAuthors])
 
-    // useEffect(()=>{
-    //     setAuthorsList(authorsStore)
-    // }, [authorsStore]);
-
-    function handleClick(description) {
-        const authors = courseAuthors.map(item => item.id)
-        dispatch(
-            updateCourseThunk({
-                title,
-                description,
-                duration,
-                authors,
-                "id": uuid(),
-                "creationDate": formatDate(),
-            })
-        )
+    function handleClick() {
+        const authors = courseAuthors.map(item => item.id);
+        const id = course.id;
+        if(isValid) {
+            dispatch(
+                updateCourseThunk({
+                    title,
+                    description,
+                    duration,
+                    authors,
+                    id,
+                    "creationDate": formatDate(),
+                })
+            )
+        }
+        history.push("/courses")
     }
 
     function handleTitleChange(newTitle) {
@@ -83,9 +90,7 @@ export default function UpdateCourse() {
                         <Link to={"/courses"} className={"btn-back"}>
                             <Button name="Back to courses" color="primary" icon={<ArrowBackIosIcon/>}  />
                         </Link>
-                        <Link to={"/courses"}>
-                            <Button name="Update course" variant="contained" color="primary" onClick={handleClick}/>
-                        </Link>
+                        <Button name="Update course" variant={btnBorder} color={btnColor} onClick={handleClick}/>
                     </div>
                 </div>
                 <TextArea label="Description" value={description} onChange={handleDescriptionChange}/>
@@ -113,12 +118,3 @@ export default function UpdateCourse() {
         </div>
     )
 }
-
-// UpdateCourse.propTypes = {
-//     user: PropTypes.shape({
-//       isAuth: PropTypes.bool,
-//       name: PropTypes.string,
-//       email: PropTypes.string,
-//       token: PropTypes.string
-//     }).isRequired,
-// }
