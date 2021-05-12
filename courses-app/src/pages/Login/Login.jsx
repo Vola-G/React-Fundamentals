@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 
 import { authorizeThunk } from "../../store/user/thunk";
 
+import { useEmailValidation,
+  usePassValidation
+ } from "../../utils/validation";
+
 import Button from 'components/Button/Button';
 import Input from "components/Input/Input";
 import Typography from '@material-ui/core/Typography';
@@ -13,19 +17,42 @@ import "./Login.css";
 
 
 export const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const history = useHistory();
-    const dispatch = useDispatch();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailWarning, setEmailWarning] = useState("");
+  const [passWarning, setPassWarning] = useState("");
+  const [isPassValid, setPassValid] = useState(false);
+  const [isEmailValid, setEmailValid] = useState(false)
+
 
     const createUser = (event) => {
       event.preventDefault();
-      let loginData = {
-        email: email,
-        password: password
+      if(isPassValid && isEmailValid) {
+        let loginData = {
+          email: email,
+          password: password
+        }
+        dispatch(authorizeThunk(loginData))
+        history.push("/courses")
+      }else {
+        alert("Incorrect login data")
       }
-      dispatch(authorizeThunk(loginData))
-      history.push("/courses")
+    }
+
+    function handleEmailChange(newEmail) {
+      setEmail(newEmail)
+      const isValid = useEmailValidation(newEmail)
+      setEmailValid(isValid)
+      isValid ? setEmailWarning("") : setEmailWarning("Enter a valid email address")
+    }
+
+    function handlePassChange(newPass) {
+      setPassword(newPass)
+      const isValid = usePassValidation(newPass)
+      setPassValid(isValid)
+      isValid ? setPassWarning("") : setPassWarning("Password must be more than 6 characters");
     }
 
     return (
@@ -40,15 +67,16 @@ export const Login = () => {
                     type="email"
                     value={email}
                     style={"form-item"} 
-                    onChange={(emailValue)=>setEmail(emailValue)}
-                    helperText={""}
+                    onChange={handleEmailChange}
+                    helperText={emailWarning}
                     />
                   <Input 
                     label="Password" 
                     type="text"
                     value={password}
                     style={"form-item"} 
-                    onChange={(passValue)=>setPassword(passValue)}
+                    onChange={handlePassChange}
+                    helperText={passWarning}
                     />
                   <Button 
                     name="Login" 
