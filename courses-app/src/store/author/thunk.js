@@ -1,24 +1,19 @@
+import axios from 'axios';
 import {
     getAuthors,
     saveAuthors
 } from "./actionCreators"
-import axios from 'axios';
+import { Api } from "apis/authorsApi"
 
 
 const user = window.localStorage.getItem("currentUser");
-const token = JSON.parse(user).token
+const token = user ? JSON.parse(user).token : '';
+const apis = new Api(token);
 
 export const getAuthorsThunk = () => {
     return async function(dispathc) {
-        const options = {
-            method: 'GET',
-            headers: { 
-                'accept': '*/*'
-            },
-            url: `http://localhost:3000/authors/all`
-        };
         try {
-            let response = await axios(options);
+            let response = await axios(apis.getAuthors());
             let authors = response.data.result
             return dispathc(getAuthors(authors))
         } catch(error) {
@@ -30,18 +25,8 @@ export const getAuthorsThunk = () => {
 export const saveAuthorsThunk = (newAuthor) => {
     return async function(dispathc) {
         const authorName = {name: newAuthor}
-        const options = {
-            method: 'POST',
-            headers: { 
-                'accept': '*/*',
-                'Content-Type': 'application/json',
-                'Authorization': token
-            },
-            data: JSON.stringify(authorName),
-            url: `http://localhost:3000/authors/add`
-        };
         try {
-            let response = await axios(options);
+            let response = await axios(apis.saveAuthors(authorName));
             let authors = response.data.result
             return dispathc(saveAuthors(authors))
         } catch(error) {
