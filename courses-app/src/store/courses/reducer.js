@@ -10,6 +10,10 @@ const coursesInitialState = {
 }
    
 export function coursesReducer(state = coursesInitialState, action) {
+    if(action.type === "UPDATE_COURSE") {
+        let index = state.courses.indexOf(state.courses.find(item => item.id === action.payload.id));
+        state.courses[index] = action.payload
+    }
     switch(action.type) {
         case GET_COURSES: 
             return {
@@ -24,7 +28,7 @@ export function coursesReducer(state = coursesInitialState, action) {
         case UPDATE_COURSE:
             return {
                 ...state,
-                courses: [...state.courses.map(item => item.id === action.payload.id ? action.payload : item.id)]
+                courses: [...state.courses]
             }
         case DELETE_COURSE:
             return {

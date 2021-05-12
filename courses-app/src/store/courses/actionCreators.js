@@ -19,10 +19,10 @@ export const saveCourse = (newCourse) => {
     }
 }
 
-export const updateCourse = () => {
+export const updateCourse = (editedCourse) => {
     return {
         type: UPDATE_COURSE,
-        payload: {}
+        payload: editedCourse
     }
 }
 
