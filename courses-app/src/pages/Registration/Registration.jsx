@@ -36,18 +36,18 @@ export const Registration = () => {
 
     useEffect(()=>{
       dispatch(registrationThunk(registrData));
-      history.push("/login")
     }, [registrData]);
 
     const createUser = (event) => {
       event.preventDefault(); 
       if(isNameValid && isPassValid && isEmailValid) {
-        let registrData = {
+        let registrParams = {
           name: name,
           email: email,
           password: password
         }
-        setRegistrData(JSON.stringify(registrData));
+        setRegistrData(JSON.stringify(registrParams));
+        history.push("/login")
       } else {
         alert("Incorrect registration data")
       }
