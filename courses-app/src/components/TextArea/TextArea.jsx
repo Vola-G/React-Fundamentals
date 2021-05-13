@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import TextField from '@material-ui/core/TextField';
   
-  export function TextArea({ label, value, onChange }) {
+  export function TextArea({ label, value, onChange, helperText }) {
     function handleChange(event) {
       onChange(event.target.value);
     }
@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField';
             fullWidth
             margin="normal"
             onChange={handleChange}
+            helperText={helperText}
           />
     );
   }
@@ -24,5 +25,6 @@ import TextField from '@material-ui/core/TextField';
 TextArea.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  helperText: PropTypes.string
 }

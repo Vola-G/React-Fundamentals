@@ -17,7 +17,7 @@ import Button from "../../components/Button/Button";
 import { TextArea } from "../../components/TextArea/TextArea";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import { formatDate } from "../../utils";
+import { formatDate, useDescriptionValidation, useTimeValidation } from "../../utils";
 
 import "./CreateCourse.css"
 
@@ -34,15 +34,26 @@ export default function CreateCourse() {
     const [btnColor, setBtnColor] = useState("secondary");
     const [isValid, setValid] = useState(false);
 
+    const [isTitleValid, setTitleValid] = useState(false);
+    const [isDescriptionValid, setDescriptionValid] = useState(false);
+    const [isDurationValid, setDurationValid] = useState(false);
+    const [titleWarning, setTitleWarning] = useState("");
+    const [descriptionWarning, setDescriptionWarning] = useState("");
+    const [durationWarning, setDurationWarning] = useState("");
+
     useEffect(()=> {
         !authorsList.length ? dispatch(getAuthors()) : null
     }, [])
 
     useEffect(()=> {
-        if(title && description && duration && courseAuthors.length) {
+        if(isTitleValid && isDescriptionValid && isDurationValid && courseAuthors.length) {
             setBtnBorder("contained");
             setBtnColor("primary");
             setValid(true)
+        } else {
+            setBtnBorder("outlined");
+            setBtnColor("secondary");
+            setValid(false)
         }
     }, [title, description, duration, courseAuthors])
 
@@ -69,10 +80,27 @@ export default function CreateCourse() {
 
     function handleTitleChange(newTitle) {
         setTitle(newTitle)
+        const titleStatus = useDescriptionValidation(newTitle);
+        if(titleStatus.isTextValid) {
+            setTitleWarning(titleStatus.warning)
+            setTitleValid(true)
+        } else {
+            setTitleWarning(titleStatus.warning)
+            setTitleValid(false)
+        }  
     }
 
     function handleDescriptionChange(newDescription) {
         setDescription(newDescription);
+        const descrStatus = useDescriptionValidation(newDescription);
+        if(descrStatus.isTextValid) {
+            setDescriptionWarning(descrStatus.warning)
+            setDescriptionValid(true)
+        } else {
+            setDescriptionWarning(descrStatus.warning)
+            setDescriptionValid(false)
+        }  
+        
     }
 
     function handleAddAuthor(name) {
@@ -86,14 +114,22 @@ export default function CreateCourse() {
     }
 
     function handleChangeDuration(time) {
+        const timeStatus = useTimeValidation(time);
         setDuration(Number(time))
+        if(timeStatus.isTimeValid) {
+            setDurationWarning(timeStatus.warning)
+            setDurationValid(true)
+        } else {
+            setDurationWarning(timeStatus.warning)
+            setDurationValid(false)
+        }
     }
 
     return (
         <div className={"container-center"}>
             <div>
                 <div className={"title-container"}>
-                    <Input label="Title" value={title} type="text" onChange={handleTitleChange} />
+                    <Input label="Title" value={title} type="text" onChange={handleTitleChange} helperText={titleWarning}/>
                     <div>
                         <Link to={"/courses"} className={"btn-back"}>
                             <Button name="Back to courses" color="primary" icon={<ArrowBackIosIcon/>}  />
@@ -101,7 +137,7 @@ export default function CreateCourse() {
                         <Button name="Create course" variant={btnBorder} color={btnColor} onClick={handleClick}/>
                     </div>
                 </div>
-                <TextArea label="Description" value={description} onChange={handleDescriptionChange}/>
+                <TextArea label="Description" value={description} onChange={handleDescriptionChange} helperText={descriptionWarning}/>
             </div>
             <div className={"parameters-container"}>
                 <div className={"parameters-container_row"}>
@@ -114,7 +150,7 @@ export default function CreateCourse() {
                         />
                 </div>
                 <div className={"parameters-container_row"}>
-                    <CourseDuration onAddDuration={handleChangeDuration}/>
+                    <CourseDuration onAddDuration={handleChangeDuration} helperText={durationWarning}/>
                     <ManageAuthor 
                         title="Course Authors" 
                         authors={courseAuthors} 
@@ -125,13 +161,4 @@ export default function CreateCourse() {
             </div>
         </div>
     )
-}
-
-CreateCourse.propTypes = {
-    user: PropTypes.shape({
-      isAuth: PropTypes.bool,
-      name: PropTypes.string,
-      email: PropTypes.string,
-      token: PropTypes.string
-    }).isRequired,
 }
