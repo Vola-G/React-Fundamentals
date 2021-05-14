@@ -1,0 +1,30 @@
+.login-container {
+    min-height: calc(100vh - 77px);
+    display: flex;
+    align-items: center;
+}
+
+.login-block {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    padding: 50px;
+    text-align: center;
+    overflow: auto;
+    background: #fff;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form-item {
+    width: 100%;
+    margin: 20px 0 !important;
+    box-sizing: border-box;
+}
