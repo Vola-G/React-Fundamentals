@@ -61,22 +61,22 @@ const useStyles = makeStyles((theme) => ({
     return (
         <Card className={classes.root}>
           <CardContent className={classes.title}>
-            <Typography gutterBottom variant="h4" component="h2">
+            <Typography gutterBottom variant="h4" component="h2" data-testid="card-title">
                 {title}
             </Typography>
-            <Typography variant="body1"  component="p">
+            <Typography variant="body1" component="p" data-testid="card-description">
                 {description}
             </Typography>
           </CardContent>
           <CardContent className={classes.info}>
             <div>
-              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
+              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem} data-testid="card-authors">
                 <b>Authors:</b> {courseAuthors.join(", ")}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
+              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem} data-testid="card-duration">
                 <b>Duration:</b> {formatTime(duration)}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem}>
+              <Typography variant="body2" color="textSecondary" component="h5" className={classes.infoElem} data-testid="card-creationDate">
                 <b>Created:</b> {creationDate}
               </Typography>
             </div>
