@@ -4,35 +4,42 @@ import { connect, useDispatch } from "react-redux";
 
 import { logOut } from "store/user/actionCreators";
 
-import { UserBar } from "components/Header/UserBar/UserBar";
-import { GuestBar } from "components/Header/GuestBar/GuestBar";
-
+import Button from "components/Button/Button";
 import SchoolIcon from '@material-ui/icons/School';
+
 import "./Header.css";
-import { useEffect } from "react";
 
 function Header(user) {
     const dispatch = useDispatch();
-    const onLogout = () => {
-        dispatch(logOut())
-        console.log("LOGOUT")
-    }
 
-    // useEffect(()=> {}, [user])
+    const handleClick = () => {
+        user?.isAuth ? dispatch(logOut()) : null;
+    }
 
     return (
         <div className={"header"}>
             <nav className={"navbar"}>
                 <div className={"navbar-left"}>
                     <Link to={"/courses"}>
-                        <SchoolIcon color="primary" style={{ fontSize: 30 }}/>
+                        <SchoolIcon color="primary" style={{ fontSize: 30 }} data-testid="header-logo"/>
                     </Link>
                     <Link to={"/courses"} className={"navbar-title_link"}>
                         <h3 className={"navbar-title"}>Courses-App</h3>
                     </Link>
                 </div>
                 <div className={"navbar-right"}>
-                    { (user && user.isAuth) ? <UserBar user={user.name ? user.name : user.email} onClick={onLogout}/> : <GuestBar/> }
+                    <h4 data-testid="header-user">{user?.isAuth ? user.name ? user.name : user.email : "Guest"}</h4>
+                    <Link to={"/login"}>
+                        <div data-testid="header-button">
+                            <Button 
+                                    name={user?.isAuth ? "Logout" : "Login"} 
+                                    variant="contained" 
+                                    color="primary" 
+                                    style={"navbar-btn"} 
+                                    onClick={handleClick}
+                                    />
+                        </div>
+                    </Link>
                 </div>
             </nav>
         </div>
