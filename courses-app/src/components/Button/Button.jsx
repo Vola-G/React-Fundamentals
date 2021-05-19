@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button';
 
 import PropTypes from 'prop-types';
 
-export default function Btn({ name, variant, color, onClick, type, style, icon }) {
+export default function Btn({ name, variant, color, onClick, type, style, icon, isDisabled }) {
     function handleClick() {
         if(onClick) {
             onClick()
@@ -18,6 +18,7 @@ export default function Btn({ name, variant, color, onClick, type, style, icon }
             startIcon={icon} 
             style={{width: "max-content"}} 
             className={style}
+            disabled={isDisabled}
             >
             {name}
         </Button>
@@ -31,6 +32,7 @@ Btn.propTypes = {
     onClick: PropTypes.func, 
     type: PropTypes.string,
     style: PropTypes.string, 
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    isDisabled: PropTypes.bool
   }
   
