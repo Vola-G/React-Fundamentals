@@ -6,7 +6,7 @@ export function Cards({ courses, authors }) {
     return (
         courses.map(course => {
             return (
-                <CourseCard key={course.id} course={course} authorsList={authors}/>
+                <CourseCard key={course.id} course={course} authorsList={authors} data-testid="cards"/>
             )
         })
     )
