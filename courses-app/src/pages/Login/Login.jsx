@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 
 import { authorizeThunk } from "../../store/user/thunk";
@@ -95,8 +94,4 @@ export const Login = () => {
           </div>
         </div>
     )  
-}
-
-Login.propTypes = {
-  authorize: PropTypes.func.isRequired,
 }

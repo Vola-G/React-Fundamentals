@@ -34,8 +34,9 @@ export const Registration = () => {
         return;
     }
 
-    useEffect(()=>{
-      dispatch(registrationThunk(registrData));
+    useEffect(async()=>{
+      const result = await registrationThunk(registrData);
+      history.push("/login")
     }, [registrData]);
 
     const createUser = (event) => {
@@ -47,7 +48,6 @@ export const Registration = () => {
           password: password
         }
         setRegistrData(JSON.stringify(registrParams));
-        history.push("/login")
       } else {
         alert("Incorrect registration data")
       }

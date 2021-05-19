@@ -8,16 +8,17 @@ import { Api } from "apis/userApi"
 const storage = window.localStorage;
 const apis = new Api();
 
-export const registrationThunk = (registrData) =>{
+export const registrationThunk = async (registrData) =>{
     return async function() {
           try {
             const result = await axios(apis.getUser(registrData));
             if(result) {
               alert("you are registered");
               storage.setItem("registered", "true");
+              return result
             }
           } catch(error) {
-            console.log("ERROR", error)
+            return error
           }
     }  
 }
