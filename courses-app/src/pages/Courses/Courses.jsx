@@ -19,7 +19,7 @@ const Courses = (props) => {
     };
 
     useEffect(() => {
-        const results = courses.filter(course => course.title.toLowerCase().includes(searchTerm) || course.id.toLowerCase().includes(searchTerm));
+        const results = courses.filter(course => course.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()) || course.id.toLowerCase().includes(searchTerm));
         setSearchResults(results);
     }, [searchTerm, courses]);
 
