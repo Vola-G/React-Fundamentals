@@ -28,65 +28,41 @@ const authors = [
     }
 ];
 
-afterEach(()=> cleanup())
+let getByTestId;
 
-test("Should display title", ()=> {
-    render(
+beforeEach(()=> {
+    const component = render(
         <Provider store={store}>
             <BrowserRouter>
                 <CourseCard course={course} authorsList={authors}/>
             </BrowserRouter>
         </Provider>
     ,)
+    getByTestId = component.getByTestId
+})
+
+test("Should display title", ()=> {
     const cardTitle = screen.getByTestId('card-title');
     expect(cardTitle).toBeInTheDocument();
     expect(cardTitle).toHaveTextContent('HTML5')
 })
 
 test("Should display description", ()=> {
-    render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <CourseCard course={course} authorsList={authors}/>
-            </BrowserRouter>
-        </Provider>
-    )
     const cardDescription = screen.getByTestId('card-description');
     expect(cardDescription).toBeInTheDocument();
 })
 
 test("Should display piped duration", ()=> {
-    render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <CourseCard course={course} authorsList={authors}/>
-            </BrowserRouter>
-        </Provider>
-    )
     const cardDuration = screen.getByTestId('card-duration').textContent;
     expect(cardDuration).toMatch(/^Duration:\s\d{2,}:\d{2}$/)
 })
 
 test("Should display authors list", ()=> {
-    render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <CourseCard course={course} authorsList={authors}/>
-            </BrowserRouter>
-        </Provider>
-    )
     const cardAuthors = screen.getByTestId('card-authors');
     expect(cardAuthors).toHaveTextContent('Authors: author, author2')
 })
 
 test("Should display created date", ()=> {
-    render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <CourseCard course={course} authorsList={authors}/>
-            </BrowserRouter>
-        </Provider>
-    )
     const cardCreationDate = screen.getByTestId('card-creationDate').textContent;
     expect(cardCreationDate).toMatch(/^Created:\s\d{1,2}\/\d{1,2}\/\d{4}$/)
 })
