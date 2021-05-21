@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
-import { Cards } from "../../components/Cards/Cards";
+import { CourseCard } from '../../components/CourseCard/CourseCard';
 import SearchForm from "../../components/SearchForm/SearchForm";
 import Button from "../../components/Button/Button";
 
 import "./Courses.css";
 
-const Courses = (props) => {
-    const { courses, authors } = props;
+const Courses = ({ courses, authors }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState(courses);
 
@@ -28,11 +27,15 @@ const Courses = (props) => {
             <div className={"searchform-container"}>
                 <SearchForm value={searchTerm} onChangeTerm={handleChange}/>
                 <Link to={"/courses/add"}>
-                    <Button name="Add new course" variant="contained" color="primary" />
+                    <Button name="Add new course" variant="contained" color="primary" data-testid="addCourse-btn"/>
                 </Link>
             </div>
-            <div className={"courses-container"}>
-                <Cards courses={searchResults} authors={authors}/>
+            <div className={"courses-container"} data-testid="card">
+                {searchResults.map(course => {
+                    return (
+                        <CourseCard key={course.id} course={course} authorsList={authors} />
+                    )
+                })}
             </div> 
         </div>
     )
