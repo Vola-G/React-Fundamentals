@@ -42,10 +42,6 @@ export default function CreateCourse() {
     const [durationWarning, setDurationWarning] = useState("");
 
     useEffect(()=> {
-        !authorsList.length ? dispatch(getAuthors()) : null
-    }, [])
-
-    useEffect(()=> {
         if(isTitleValid && isDescriptionValid && isDurationValid && courseAuthors.length) {
             setBtnBorder("contained");
             setBtnColor("primary");
