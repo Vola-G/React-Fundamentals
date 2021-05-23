@@ -24,7 +24,7 @@ export default function Input({ label, value, inputType, onChange, style, helper
 
 Input.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.any,
   inputType: PropTypes.string,
   onChange: PropTypes.func,
   style: PropTypes.string,
