@@ -1,4 +1,4 @@
-import { render, screen, cleanup, fireEvent, getByText } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -8,7 +8,7 @@ import {mockedCourseList, mockedAddAuthor} from '../../../localService/Mock';
 import Courses from '../Courses'
 
 
-test.skip("Should display amount of CourseCard equal length of courses array", ()=> {
+test("Should display amount of CourseCard equal length of courses array", ()=> {
     const container = render(
         <Provider store={store}>
             <BrowserRouter>
@@ -20,7 +20,23 @@ test.skip("Should display amount of CourseCard equal length of courses array", (
     // expect(container.children.length).toBe(1);
     // console.log("CARDS", container.queryByTestId("cards").getElementsByTagName("<CourseCard>").length)
     
-    // console.log("TAG", container.getByTestId("card"))
+    console.log("TAG", container.getByTestId("card"))
+    // expect(cards).toHaveLength(courses.length)
+})
+
+test.skip("Should display Empty container if courses array length is empty", ()=> {
+    const container = render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <Courses courses={[]} authors={mockedAddAuthor}>
+                </Courses>
+            </BrowserRouter>
+        </Provider>
+    ,)
+    // expect(container.children.length).toBe(1);
+    // console.log("CARDS", container.queryByTestId("cards").getElementsByTagName("<CourseCard>").length)
+    
+    console.log("TAG", container.getByTestId("card"))
     // expect(cards).toHaveLength(courses.length)
 })
 

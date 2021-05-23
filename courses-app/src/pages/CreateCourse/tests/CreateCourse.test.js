@@ -33,7 +33,7 @@ test("Should show authors list", ()=> {
     // expect(cards).toHaveLength(courses.length)
 })
 
-test.skip("Should show authors list", ()=> {
+test.skip("Should add an author to all authors list.", ()=> {
     render(
         <Provider store={store}>
             <BrowserRouter>
@@ -41,6 +41,36 @@ test.skip("Should show authors list", ()=> {
             </BrowserRouter>
         </Provider>
     ,)
+
+    console.log("CARDS", screen.getByRole("CourseCard"))
+    
+    // expect(cards).toHaveLength(courses.length)
+})
+
+test.skip("Should add an author to course authors list.", ()=> {
+    render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <CreateCourse authors={authors}/>
+            </BrowserRouter>
+        </Provider>
+    ,)
+    // fireEvent.handleAddAuthor() - можно ли так проверить?
+
+    console.log("CARDS", screen.getByRole("CourseCard"))
+    
+    // expect(cards).toHaveLength(courses.length)
+})
+
+test.skip("Should delete an author from course authors list.", ()=> {
+    render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <CreateCourse authors={authors}/>
+            </BrowserRouter>
+        </Provider>
+    ,)
+    // fireEvent.handleAddAuthor() - можно ли так проверить?
 
     console.log("CARDS", screen.getByRole("CourseCard"))
     
