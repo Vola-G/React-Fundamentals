@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from "react-redux";
 
-import { logOut } from "store/user/actionCreators";
+import { logOutThunk } from "store/user/thunk";
 
 import Button from "components/Button/Button";
 import SchoolIcon from '@material-ui/icons/School';
@@ -13,7 +13,7 @@ function Header(user) {
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        user?.isAuth ? dispatch(logOut()) : null;
+        user?.isAuth ? dispatch(logOutThunk()) : null;
     }
 
     return (
@@ -32,12 +32,12 @@ function Header(user) {
                     <Link to={"/login"}>
                         <div data-testid="header-button">
                             <Button 
-                                    name={user?.isAuth ? "Logout" : "Login"} 
-                                    variant="contained" 
-                                    color="primary" 
-                                    style={"navbar-btn"} 
-                                    onClick={handleClick}
-                                    />
+                                name={user?.isAuth ? "Logout" : "Login"} 
+                                variant="contained" 
+                                color="primary" 
+                                style={"navbar-btn"} 
+                                onClick={handleClick}
+                                />
                         </div>
                     </Link>
                 </div>
