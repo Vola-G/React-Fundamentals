@@ -7,7 +7,7 @@ import {
 import { connect, useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 
-import { PrivateRoute } from "../helpers/PrivatRoute";
+import { PrivateRoute } from "../components/PrivateRoute/PrivatRoute";
 
 import { getCoursesThunk } from "store/courses/thunk";
 import { getAuthorsThunk } from "store/author/thunk";

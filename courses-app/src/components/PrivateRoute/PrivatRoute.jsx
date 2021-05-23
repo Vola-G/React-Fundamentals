@@ -7,7 +7,7 @@ export const PrivateRoute = ({component: Component, ...rest}) => {
         <Route
             {...rest}
             render={props =>
-                JSON.parse(user).email === "admin@email.com" ? (
+                JSON.parse(user).role === "admin" ? (
                     <Component {...props}/> 
                 ) : (
                     <Redirect to="/login"/>
