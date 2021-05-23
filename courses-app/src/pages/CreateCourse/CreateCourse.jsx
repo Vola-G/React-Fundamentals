@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import uuid from 'react-uuid';
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from 'prop-types';
 import { Link, useHistory } from "react-router-dom"
 
 import { saveCourseThunk } from "../../store/courses/thunk"
@@ -9,8 +8,6 @@ import { saveCourseThunk } from "../../store/courses/thunk"
 import { CreateNewAuthor } from "../../components/CreateNewAuthor/CreateNewAuthor";
 import { CourseDuration } from "../../components/CourseDuration/CourseDuration";
 import { ManageAuthor } from "../../components/ManageAuthor/ManageAuthor";
-
-import { getAuthors } from "store/author/actionCreators";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
