@@ -1,6 +1,6 @@
-import { LOGIN, LOGOUT, SET_USER, REGISTER } from "./actionTypes";
+import { LOGIN, LOGOUT,  REGISTER, SET_USER_ROLE, SET_USER } from "./actionTypes";
 
-export const authorize = (loginData) => {
+export const login = (loginData) => {
     return {
         type: LOGIN,
         payload: loginData
@@ -19,9 +19,18 @@ export const registration = () => {
     }
 }
 
+export const setRole = (role) => {
+    return {
+        type: SET_USER_ROLE,
+        payload: role
+    }
+}
+
 export const setCurrentUser = (user) => {
     return {
         type: SET_USER,
         payload: JSON.parse(user)
     }
 }
+
+
