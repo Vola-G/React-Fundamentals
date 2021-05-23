@@ -1,17 +1,19 @@
-import axios from 'axios';
 import { 
-    authorize,
-    logOut
+    login,
+    logOut,
+    setRole
 } from "./actionCreators";
-import { Api } from "apis/userApi"
+import { Api } from 'api/api'
 
+
+const api = new Api();
 const storage = window.localStorage;
-const apis = new Api();
 
-export const registrationThunk = async (registrData) =>{
+
+export const registrationThunk = async (registrData) => {
     return async function() {
           try {
-            const result = await axios(apis.getUser(registrData));
+            const result = await api.getUser(registrData);
             if(result) {
               alert("you are registered");
               storage.setItem("registered", "true");
@@ -23,29 +25,32 @@ export const registrationThunk = async (registrData) =>{
     }  
 }
 
-export const authorizeThunk = (loginData) =>{
+export const loginThunk = (loginData) => {
     return async function(dispatch) {
         try {
-            const result = await axios(apis.loginUser(loginData));
+            const result = await api.loginUser(loginData);
             const user = {
                 isAuth: true,
-                name: result.data.user.name,
-                email: result.data.user.email,
-                token: result.data.result
+                name: result.user.name,
+                email: result.user.email,
+                token: result.result
             }
-            dispatch(authorize(user))
+            dispatch(login(user))
+            const authorization = await api.authorizeUser();
+            user["role"] = authorization.result.role;
+            dispatch(setRole(authorization.result.role))
             storage.setItem("currentUser", JSON.stringify(user));
         }
         catch (error) {
             throw new Error("CANT LOGIN")
         }
-    }  
+    }
 }
 
 export const logOutThunk = () =>{
     return async function(dispatch) {
         try {
-            const result = await axios(apis.logoutUser());
+            const result = await api.logoutUser();
             storage.removeItem("currentUser");
             dispatch(logOut())
         } catch (error) {

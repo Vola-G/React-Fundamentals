@@ -1,22 +1,18 @@
-import axios from 'axios';
 import {
     getCourses,
     saveCourse,
     updateCourse,
     deleteCourse
 } from "./actionCreators";
-import { Api } from 'apis/coursesApi'
+import { Api } from 'api/api'
 
 
-const user = window.localStorage.getItem("currentUser");
-const token = user ? JSON.parse(user).token : '';
-
-const apis = new Api(token);
+const api = new Api();
 
 export const getCoursesThunk = () => {
     return async function(dispatch) {
-        let response = await axios(apis.getCourses())
-        let courses = response.data.result
+        let response = await api.getCourses()
+        let courses = await response.result
         return dispatch(getCourses(courses))
     };
 };
@@ -26,7 +22,7 @@ export const saveCourseThunk = (newCourse) => {
         const { id, creationDate, ...rest} = newCourse
         const fetchData = rest;
         try {
-            let response = await axios(apis.saveCourse(fetchData))
+            let response = await api.saveCourse(fetchData)
             return dispatch(saveCourse(newCourse))
         }
         catch(err) {
@@ -40,7 +36,7 @@ export const updateCourseThunk = (editedCourse) => {
         const { id, creationDate, ...rest} = editedCourse
         const fetchData = rest;
         try {
-            let response = await axios(apis.updateCourse(fetchData, id))
+            let response = await api.updateCourse(fetchData, id)
             return dispatch(updateCourse(editedCourse))
         }
         catch(err) {
@@ -52,7 +48,7 @@ export const updateCourseThunk = (editedCourse) => {
 export const deleteCourseThunk = (courseId) => {
     return async function(dispatch) {
         try {
-            let response = await axios(apis.deleteCourse(courseId))
+            let response = await api.deleteCourse(courseId)
             return dispatch(deleteCourse(courseId))
         }
         catch(err) {
