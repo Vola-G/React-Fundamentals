@@ -9,7 +9,7 @@ import Button from "../../components/Button/Button";
 
 import "./Courses.css";
 
-const Courses = ({ courses, authors }) => {
+const Courses = ({ courses, authors, user }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState(courses);
 
@@ -26,9 +26,14 @@ const Courses = ({ courses, authors }) => {
         <div className={"container-center"}>
             <div className={"searchform-container"}>
                 <SearchForm value={searchTerm} onChangeTerm={handleChange}/>
-                <Link to={"/courses/add"}>
-                    <Button name="Add new course" variant="contained" color="primary" data-testid="addCourse-btn"/>
-                </Link>
+                
+                {user.role === "admin" ?
+                    <Link to={"/courses/add"}>
+                        <Button name="Add new course" variant="contained" color="primary" data-testid="addCourse-btn"/>
+                    </Link> 
+                    : null
+                }
+
             </div>
             <div className={"courses-container"} data-testid="card">
                 {searchResults.map(course => {
@@ -54,12 +59,20 @@ Courses.propTypes = {
         id: PropTypes.string,
         name: PropTypes.string
     })).isRequired,
+    user:PropTypes.shape({
+        isAuth: PropTypes.bool,
+        name: PropTypes.string,
+        email: PropTypes.string,
+        token: PropTypes.string,
+        role: PropTypes.string,
+    }).isRequired,
 }
 
 function mapStateToProps(state) {
     const { courses } = state.coursesReducer
     const { authors } = state.authorsReducer
-    return { courses, authors }
+    const user = state.userReducer
+    return { courses, authors, user }
 }
 
 export default connect(mapStateToProps)(Courses)
