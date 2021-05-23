@@ -32,7 +32,7 @@ Btn.propTypes = {
     onClick: PropTypes.func, 
     type: PropTypes.string,
     style: PropTypes.string, 
-    icon: PropTypes.string,
+    icon: PropTypes.object,
     isDisabled: PropTypes.bool
   }
   
