@@ -30,7 +30,8 @@ export function userReducer(state = userInitialState, action) {
                 isAuth: payload.isAuth,
                 name: payload.name,
                 email: payload.email,
-                token: payload.token
+                token: payload.token,
+                role: payload.role
             }
         case SET_USER_ROLE:
             return {

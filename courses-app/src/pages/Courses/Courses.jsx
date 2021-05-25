@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { CourseCard } from '../../components/CourseCard/CourseCard';
 import SearchForm from "../../components/SearchForm/SearchForm";
@@ -9,7 +8,10 @@ import Button from "../../components/Button/Button";
 
 import "./Courses.css";
 
-const Courses = ({ courses, authors, user }) => {
+export const Courses = () => {
+    const { courses } = useSelector(state => state.coursesReducer)
+    const { authors } = useSelector(state => state.authorsReducer)
+    const user = useSelector(state => state.userReducer)
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState(courses);
 
@@ -35,7 +37,7 @@ const Courses = ({ courses, authors, user }) => {
                 }
 
             </div>
-            <div className={"courses-container"} data-testid="card">
+            <div className={"courses-container"} data-testid="cards-list">
                 {searchResults.map(course => {
                     return (
                         <CourseCard key={course.id} course={course} authorsList={authors} />
@@ -46,33 +48,33 @@ const Courses = ({ courses, authors, user }) => {
     )
 }
 
-Courses.propTypes = {
-    courses: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        creationDate: PropTypes.string,
-        duration: PropTypes.number,
-        authors: PropTypes.array
-    })).isRequired,
-    authors:PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string
-    })).isRequired,
-    user:PropTypes.shape({
-        isAuth: PropTypes.bool,
-        name: PropTypes.string,
-        email: PropTypes.string,
-        token: PropTypes.string,
-        role: PropTypes.string,
-    }).isRequired,
-}
+// Courses.propTypes = {
+//     courses: PropTypes.arrayOf(PropTypes.shape({
+//         id: PropTypes.string,
+//         title: PropTypes.string,
+//         description: PropTypes.string,
+//         creationDate: PropTypes.string,
+//         duration: PropTypes.number,
+//         authors: PropTypes.array
+//     })).isRequired,
+//     authors:PropTypes.arrayOf(PropTypes.shape({
+//         id: PropTypes.string,
+//         name: PropTypes.string
+//     })).isRequired,
+//     user:PropTypes.shape({
+//         isAuth: PropTypes.bool,
+//         name: PropTypes.string,
+//         email: PropTypes.string,
+//         token: PropTypes.string,
+//         role: PropTypes.string,
+//     }).isRequired,
+// }
 
-function mapStateToProps(state) {
-    const { courses } = state.coursesReducer
-    const { authors } = state.authorsReducer
-    const user = state.userReducer
-    return { courses, authors, user }
-}
+// function mapStateToProps(state) {
+//     const { courses } = state.coursesReducer
+//     const { authors } = state.authorsReducer
+//     const user = state.userReducer
+//     return { courses, authors, user }
+// }
 
-export default connect(mapStateToProps)(Courses)
+// export default connect(mapStateToProps)(Courses)

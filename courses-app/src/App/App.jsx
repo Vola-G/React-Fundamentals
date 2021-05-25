@@ -14,7 +14,7 @@ import { getAuthorsThunk } from "store/author/thunk";
 import { setCurrentUser } from "store/user/actionCreators";
 
 import Header from "components/Header/Header";
-import Courses from "pages/Courses/Courses";
+import { Courses } from "pages/Courses/Courses";
 import { Login } from "pages/Login/Login";
 import { Registration } from "pages/Registration/Registration";
 import CourseInfo from "components/CourseInfo/CourseInfo";
