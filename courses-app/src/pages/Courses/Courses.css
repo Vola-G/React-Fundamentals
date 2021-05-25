@@ -1,0 +1,9 @@
+.searchform-container {
+    display: flex;;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.courses-container {
+    margin: 40px 0px;
+}
